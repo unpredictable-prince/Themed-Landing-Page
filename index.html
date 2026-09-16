@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meridian VII — Lathe Medical</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,400..900&family=Newsreader:opsz,wght@6..72,200..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bone:#E6E4DE;
+  --paper:#F3F2EE;
+  --titanium:#CFCEC8;
+  --ink:#15171A;
+  --graphite:#3A3F45;
+  --steel:#787E86;
+  --hair:#BFBEB8;
+  --signal:#B7222B;
+  --led:#B7222B;
+  --shadow:rgba(21,23,26,.14);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bone:#15181A;
+    --paper:#1E2225;
+    --titanium:#2A2F33;
+    --ink:#E8E6E0;
+    --graphite:#C2C3C0;
+    --steel:#8D9298;
+    --hair:#343A3E;
+    --signal:#E2564E;
+    --led:#E2564E;
+    --shadow:rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --bone:#15181A;--paper:#1E2225;--titanium:#2A2F33;--ink:#E8E6E0;--graphite:#C2C3C0;
+  --steel:#8D9298;--hair:#343A3E;--signal:#E2564E;--led:#E2564E;--shadow:rgba(0,0,0,.5);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bone);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:17px;
+  line-height:1.62;
+  font-optical-sizing:auto;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+@media(max-width:600px){.wrap{padding:0 20px}}
+
+.mech{font-family:"Anybody",ui-sans-serif,system-ui,sans-serif;font-variation-settings:"wdth" 100;}
+.num{font-family:"DM Mono","SFMono-Regular",ui-monospace,monospace;font-feature-settings:"tnum" 1;}
+
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--signal);outline-offset:3px;border-radius:2px}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;align-items:baseline;gap:14px;padding:26px 0 0}
+.mark{
+  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 130;font-weight:800;
+  font-size:15px;letter-spacing:.04em;
+}
+.mark-sub{color:var(--steel);font-size:14.5px;font-style:italic}
+.masthead .cls{margin-left:auto;color:var(--steel);font-size:13px}
+
+/* ---------- hero ---------- */
+.hero{padding:34px 0 18px}
+.nameplate{
+  font-family:"Anybody",sans-serif;
+  font-variation-settings:"wdth" 132;
+  font-weight:800;
+  font-size:clamp(3.1rem,12.5vw,8.6rem);
+  line-height:.86;
+  letter-spacing:-.025em;
+  margin:0;
+}
+.nameplate .seven{color:var(--signal)}
+.lede{
+  max-width:52ch;margin:22px 0 0;font-size:clamp(1.12rem,2.3vw,1.45rem);
+  line-height:1.5;color:var(--graphite);
+}
+
+/* ---------- calibration console ---------- */
+.console{
+  margin-top:40px;
+  background:var(--paper);
+  border:1px solid var(--hair);
+  border-radius:20px;
+  box-shadow:0 1px 0 var(--hair), 0 26px 50px -38px var(--shadow);
+  overflow:hidden;
+}
+.console-grid{display:grid;grid-template-columns:1fr 268px}
+@media(max-width:920px){.console-grid{grid-template-columns:1fr}}
+.stage{padding:8px 10px 0;min-width:0}
+.stage svg{width:100%;height:auto;display:block}
+
+.readouts{
+  border-left:1px solid var(--hair);
+  padding:26px 24px 20px;
+  display:flex;flex-direction:column;gap:20px;
+}
+@media(max-width:920px){.readouts{border-left:0;border-top:1px solid var(--hair)}}
+.state{display:flex;align-items:center;gap:9px}
+.led{width:9px;height:9px;border-radius:50%;background:var(--led);flex:none}
+@media(prefers-reduced-motion:no-preference){
+  .led{animation:beat 2.6s ease-in-out infinite}
+}
+@keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.34;transform:scale(.82)}}
+.state-name{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 118;font-weight:700;font-size:1.02rem}
+.r{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--hair);padding-bottom:9px}
+.r:last-of-type{border-bottom:0}
+.r-label{color:var(--steel);font-size:14.5px;font-style:italic}
+.r-val{font-family:"DM Mono",monospace;font-size:1.22rem;font-weight:500;font-feature-settings:"tnum" 1}
+.r-val span{font-size:.72em;color:var(--steel);margin-left:2px}
+.strain{height:4px;background:var(--titanium);border-radius:3px;overflow:hidden}
+.strain i{display:block;height:100%;background:var(--signal);width:0%}
+@media(prefers-reduced-motion:no-preference){.strain i{transition:width .09s linear}}
+
+.control{
+  border-top:1px solid var(--hair);
+  padding:20px 26px 24px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.control label{font-size:15.5px;color:var(--graphite);flex:none}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;background:transparent;
+  flex:1 1 260px;min-width:180px;height:26px;margin:0;cursor:ew-resize;
+}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--titanium);border-radius:2px}
+input[type=range]::-moz-range-track{height:3px;background:var(--titanium);border-radius:2px}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:26px;height:26px;margin-top:-11.5px;border-radius:50%;
+  background:var(--paper);border:2.5px solid var(--ink);box-shadow:0 2px 6px -2px var(--shadow);
+}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink);
+}
+.pct{font-family:"DM Mono",monospace;font-size:15px;color:var(--steel);flex:none;min-width:4ch}
+
+/* ---------- bands ---------- */
+.band{padding:88px 0 0}
+.band-head{
+  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 122;font-weight:700;
+  font-size:clamp(1.55rem,3.6vw,2.3rem);letter-spacing:-.015em;line-height:1.1;margin:0 0 34px;
+  max-width:24ch;
+}
+.rows{display:grid;gap:30px}
+.row{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,54ch);gap:14px 48px;align-items:start}
+@media(max-width:780px){.row{grid-template-columns:1fr;gap:6px}}
+.row h3{
+  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 112;font-weight:700;
+  font-size:1.08rem;margin:0;line-height:1.3;
+}
+.row p{margin:0;color:var(--graphite)}
+
+/* ---------- spec table ---------- */
+.spec-scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px}
+caption{text-align:left;color:var(--steel);font-style:italic;font-size:15px;padding-bottom:12px}
+th,td{text-align:left;padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
+th{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 108;font-weight:600;font-size:.98rem;width:38%}
+td{font-family:"DM Mono",monospace;font-size:.95rem;font-feature-settings:"tnum" 1;color:var(--graphite)}
+td em{font-family:"Newsreader",serif;font-size:1.02rem;font-style:italic;color:var(--steel)}
+
+/* ---------- sequence ---------- */
+.steps{counter-reset:s;display:grid;gap:0}
+.step{
+  counter-increment:s;display:grid;grid-template-columns:4.2rem minmax(0,58ch);
+  gap:12px 24px;padding:22px 0;border-top:1px solid var(--hair);align-items:start;
+}
+.step:last-child{border-bottom:1px solid var(--hair)}
+.step::before{
+  content:counter(s,decimal-leading-zero);
+  font-family:"DM Mono",monospace;font-size:1.5rem;color:var(--signal);line-height:1.15;
+}
+.step h3{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 112;font-weight:700;font-size:1.06rem;margin:0 0 4px}
+.step p{margin:0;color:var(--graphite)}
+.step-dur{color:var(--steel);font-style:italic;font-size:15px}
+@media(max-width:600px){.step{grid-template-columns:3rem minmax(0,1fr)}}
+
+/* ---------- owners ---------- */
+.owners{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+@media(max-width:780px){.owners{grid-template-columns:1fr;gap:34px}}
+blockquote{margin:0;font-size:clamp(1.18rem,2.6vw,1.5rem);line-height:1.42;max-width:32ch}
+.who{margin-top:14px;color:var(--steel);font-size:15px;font-style:italic}
+.who b{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 110;font-style:normal;font-weight:700;color:var(--ink);font-size:14.5px}
+
+/* ---------- cta ---------- */
+.cta{
+  margin-top:96px;background:var(--paper);border:1px solid var(--hair);
+  border-radius:20px;padding:clamp(30px,5vw,54px);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px 48px;align-items:end;
+}
+@media(max-width:780px){.cta{grid-template-columns:1fr;align-items:start}}
+.cta h2{
+  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 126;font-weight:800;
+  font-size:clamp(1.9rem,5vw,3.1rem);line-height:.98;letter-spacing:-.02em;margin:0 0 14px;
+}
+.cta p{margin:0;color:var(--graphite);max-width:46ch}
+.btn{
+  display:inline-block;background:var(--ink);color:var(--bone);text-decoration:none;
+  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 116;font-weight:700;font-size:1.05rem;
+  padding:17px 30px;border-radius:999px;white-space:nowrap;
+}
+.btn:hover{background:var(--signal)}
+@media(prefers-reduced-motion:no-preference){.btn{transition:background .16s ease}}
+
+/* ---------- footer ---------- */
+footer{margin-top:80px;padding:30px 0 56px;border-top:1px solid var(--hair);color:var(--steel);font-size:14.5px}
+.foot-grid{display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline}
+footer p{margin:0;max-width:62ch}
+.disclaim{margin-top:18px;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="masthead">
+    <span class="mark">LATHE</span>
+    <span class="mark-sub">upper-limb systems, since 2019</span>
+    <span class="cls num">Class II · CE 0483</span>
+  </header>
+
+  <section class="hero">
+    <h1 class="nameplate">Meridian<span class="seven"> VII</span></h1>
+    <p class="lede">A myoelectric forearm that reads intent at the nerve instead of guessing from muscle twitch. Eighteen grips, a wrist that turns all the way round, and a thumb that knows the difference between an egg and a door handle.</p>
+
+    <div class="console">
+      <div class="console-grid">
+        <div class="stage">
+          <svg viewBox="0 0 920 540" role="img" aria-label="Technical drawing of the Meridian VII forearm and hand, curling as grip force increases">
+            <defs>
+              <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="0" x2="0" y2="7" stroke="var(--hair)" stroke-width="1.6"/>
+              </pattern>
+            </defs>
+
+            <g stroke="var(--ink)" fill="var(--paper)" stroke-width="2" stroke-linejoin="round">
+
+              <!-- socket cuff -->
+              <rect x="70" y="192" width="178" height="140" rx="30"/>
+              <g stroke="var(--hair)" stroke-width="2">
+                <line x1="112" y1="212" x2="112" y2="312"/>
+                <line x1="144" y1="212" x2="144" y2="312"/>
+                <line x1="176" y1="212" x2="176" y2="312"/>
+                <line x1="208" y1="212" x2="208" y2="312"/>
+              </g>
+              <circle cx="92" cy="216" r="5.5" fill="var(--led)" stroke="none"/>
+
+              <!-- forearm shell -->
+              <path d="M244 198 C 372 194, 466 212, 566 230 L566 296 C 466 314, 372 332, 244 328 Z"/>
+              <path d="M300 228 C 380 226, 450 240, 520 252 L520 276 C 450 288, 380 302, 300 300 Z"
+                    fill="url(#hatch)" stroke="var(--hair)" stroke-width="1.5"/>
+
+              <!-- wrist joint -->
+              <circle cx="586" cy="263" r="34"/>
+              <circle cx="586" cy="263" r="13" fill="var(--titanium)"/>
+              <path d="M586 229 A34 34 0 0 1 617 250" fill="none" stroke="var(--signal)" stroke-width="3.4" stroke-linecap="round"/>
+
+              <!-- palm -->
+              <path d="M606 204 C 648 196, 698 200, 722 210 L726 318 C 698 330, 648 332, 606 322 Z"/>
+
+              <!-- fingers -->
+              <g id="fingers"></g>
+
+              <!-- thumb -->
+              <g id="thumb"></g>
+            </g>
+
+            <!-- callouts -->
+            <g stroke="var(--steel)" stroke-width="1.4" fill="none" stroke-dasharray="4 4">
+              <path d="M158 192 V 128 H 210"/>
+              <path d="M586 229 V 96 H 640"/>
+              <path d="M828 300 V 404 H 770"/>
+            </g>
+            <g fill="var(--steel)" font-family="Anybody, sans-serif" font-size="16" font-weight="600">
+              <text x="216" y="133">Neural cuff, 8 channels</text>
+              <text x="646" y="101">Torque cell</text>
+              <text x="608" y="409" text-anchor="end">Pressure skin</text>
+            </g>
+
+            <!-- scale bar -->
+            <g stroke="var(--hair)" stroke-width="1.6">
+              <line x1="70" y1="470" x2="862" y2="470"/>
+              <line x1="70" y1="462" x2="70" y2="478"/>
+              <line x1="862" y1="462" x2="862" y2="478"/>
+            </g>
+            <text x="466" y="496" text-anchor="middle" fill="var(--steel)" font-family="DM Mono, monospace" font-size="15">382 mm, cuff to fingertip</text>
+          </svg>
+        </div>
+
+        <div class="readouts">
+          <div class="state">
+            <span class="led" aria-hidden="true"></span>
+            <span class="state-name" id="stateName">Open</span>
+          </div>
+          <div class="r"><span class="r-label">Grip force</span><span class="r-val" id="oForce">12<span>N</span></span></div>
+          <div class="r"><span class="r-label">Contact points</span><span class="r-val" id="oPts">2</span></div>
+          <div class="r"><span class="r-label">Response</span><span class="r-val" id="oLat">62<span>ms</span></span></div>
+          <div class="r"><span class="r-label">Power draw</span><span class="r-val" id="oPwr">1.2<span>W</span></span></div>
+          <div class="strain" aria-hidden="true"><i id="oBar"></i></div>
+        </div>
+      </div>
+
+      <div class="control">
+        <label for="grip">Drag to set grip force</label>
+        <input id="grip" type="range" min="0" max="100" value="0" step="1"
+               aria-describedby="oForce" aria-label="Grip force, percent of maximum">
+        <span class="pct" id="oPct">0%</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2 class="band-head">Three decisions that shaped the design</h2>
+    <div class="rows">
+      <div class="row">
+        <h3>Intent, not twitch</h3>
+        <p>Surface electrodes read muscle contraction, which is a late and noisy signal. The cuff sits against the nerve bundle and picks up the instruction on its way out. You get the grip you meant, not the one your forearm managed.</p>
+      </div>
+      <div class="row">
+        <h3>It learns your hands</h3>
+        <p>The first fortnight is mostly the arm watching you. Grips you use daily move to the front of the pattern queue; ones you never call get retired. A guitarist and a joiner end up with visibly different arms.</p>
+      </div>
+      <div class="row">
+        <h3>It fails quietly</h3>
+        <p>Lose power mid-grip and the hand holds position rather than dropping what it has. A recessed lever under the wrist releases it by hand. No alarm, no flashing, nothing that turns a flat battery into an event in a supermarket queue.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2 class="band-head">Specification</h2>
+    <div class="spec-scroll">
+      <table>
+        <caption>Figures for the standard 382 mm build. Short and long builds vary by mass and battery life.</caption>
+        <tbody>
+          <tr><th scope="row">Mass</th><td>1.06 kg</td></tr>
+          <tr><th scope="row">Grip force</th><td>12 – 140 N</td></tr>
+          <tr><th scope="row">Response, intent to motion</th><td>62 ms</td></tr>
+          <tr><th scope="row">Wrist rotation</th><td>continuous, 120°/s</td></tr>
+          <tr><th scope="row">Grip patterns</th><td>18 stored, 6 mapped to gesture</td></tr>
+          <tr><th scope="row">Battery, typical day</th><td>31 h</td></tr>
+          <tr><th scope="row">Charge to full</th><td>90 min</td></tr>
+          <tr><th scope="row">Ingress rating</th><td>IP67 <em>rain and washing up, not swimming</em></td></tr>
+          <tr><th scope="row">Service interval</th><td>18 months</td></tr>
+          <tr><th scope="row">Warranty</th><td>5 years, parts and labour</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2 class="band-head">How fitting works</h2>
+    <div class="steps">
+      <div class="step">
+        <div>
+          <h3>Consultation</h3>
+          <p>A clinician checks residual limb length, skin condition and what you actually need the arm to do. Some people leave here with a different recommendation, and that is a fine outcome.</p>
+          <p class="step-dur">One appointment</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Socket cast</h3>
+          <p>A silicone impression and a pressure map. The socket is the part that decides whether you wear the arm all day or take it off at two in the afternoon, so it gets the most attention.</p>
+          <p class="step-dur">Two weeks to first fit</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Nerve mapping</h3>
+          <p>You imagine movements while the cuff records. It takes about an hour and feels like nothing at all. The map it produces is yours and does not transfer between arms.</p>
+          <p class="step-dur">90 minutes</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Fitting</h3>
+          <p>Socket adjusted on site, wrist alignment set to your shoulder, grips loaded. You go home with it the same day.</p>
+          <p class="step-dur">Half a day</p>
+        </div>
+      </div>
+      <div class="step">
+        <div>
+          <h3>Calibration and training</h3>
+          <p>Six sessions over three months, then annually. Most of it is unlearning the compensations you built up before the arm arrived.</p>
+          <p class="step-dur">Three months, tapering</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <h2 class="band-head">From people wearing one</h2>
+    <div class="owners">
+      <figure>
+        <blockquote>I stopped noticing it around week six. That is the entire review.</blockquote>
+        <figcaption class="who"><b>Priya Raval</b> — climbing instructor, 14 months</figcaption>
+      </figure>
+      <figure>
+        <blockquote>It holds an egg and it holds a 20 kg bar. I use the egg setting far more often.</blockquote>
+        <figcaption class="who"><b>Tomas Lindqvist</b> — pastry chef, 8 months</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div>
+      <h2>Book a fitting</h2>
+      <p>Assessment clinics in Manchester, Rotterdam and Pune. Bring previous imaging if you have it. The first consultation costs nothing and carries no obligation.</p>
+    </div>
+    <a class="btn" href="#book">Book a fitting</a>
+  </section>
+
+  <footer>
+    <div class="foot-grid">
+      <span class="num">Lathe Medical Ltd</span>
+      <span class="num">Device class II · CE 0483</span>
+      <span class="num">fitting@lathe.example</span>
+    </div>
+    <p class="disclaim">Meridian VII and Lathe Medical are invented for this design concept. Nothing here is a real product or clinical advice.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var FING = [
+    {kx:716, ky:216, L:[54,38,26], o:.34},
+    {kx:722, ky:232, L:[64,46,30], o:.48},
+    {kx:722, ky:254, L:[66,48,32], o:.68},
+    {kx:716, ky:276, L:[62,44,30], o:1}
+  ];
+  var MAX = [72, 78, 50];
+
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function el(n, attrs){ var e = document.createElementNS(SVGNS, n); for(var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+
+  function buildChain(kx, ky, L, widths){
+    var g1 = el("g", {}), g2 = el("g", {}), g3 = el("g", {});
+    var p1 = kx + L[0], p2 = p1 + L[1];
+    g1.appendChild(el("rect",{x:kx, y:ky-widths[0]/2, width:L[0], height:widths[0], rx:widths[0]/2}));
+    g2.appendChild(el("rect",{x:p1, y:ky-widths[1]/2, width:L[1], height:widths[1], rx:widths[1]/2}));
+    g3.appendChild(el("rect",{x:p2, y:ky-widths[2]/2, width:L[2], height:widths[2], rx:widths[2]/2}));
+    g2.appendChild(g3); g1.appendChild(g2);
+    return {root:g1, g1:g1, g2:g2, g3:g3, kx:kx, ky:ky, p1:p1, p2:p2};
+  }
+
+  var fingersG = document.getElementById("fingers");
+  var chains = FING.map(function(f){
+    var c = buildChain(f.kx, f.ky, f.L, [28,24,20]);
+    c.root.setAttribute("opacity", f.o);
+    fingersG.appendChild(c.root);
+    return c;
+  });
+
+  var thumbG = document.getElementById("thumb");
+  var thumb = buildChain(692, 306, [56,42,0], [30,25,1]);
+  thumb.g3.setAttribute("opacity", 0);
+  thumbG.appendChild(thumb.root);
+
+  function rot(g, a, cx, cy){ g.setAttribute("transform", "rotate(" + a.toFixed(2) + " " + cx + " " + cy + ")"); }
+
+  var oForce = document.getElementById("oForce"),
+      oPts   = document.getElementById("oPts"),
+      oLat   = document.getElementById("oLat"),
+      oPwr   = document.getElementById("oPwr"),
+      oBar   = document.getElementById("oBar"),
+      oPct   = document.getElementById("oPct"),
+      stateName = document.getElementById("stateName"),
+      slider = document.getElementById("grip");
+
+  function label(t){
+    if(t < 0.12) return "Open";
+    if(t < 0.40) return "Pinch";
+    if(t < 0.72) return "Cylindrical";
+    return "Power grip";
+  }
+
+  function render(v){
+    var t = v / 100;
+    chains.forEach(function(c, i){
+      var k = 1 - i * 0.05;
+      rot(c.g1, MAX[0] * t * k, c.kx, c.ky);
+      rot(c.g2, MAX[1] * t * k, c.p1, c.ky);
+      rot(c.g3, MAX[2] * t * k, c.p2, c.ky);
+    });
+    rot(thumb.g1, -14 - 46 * t, thumb.kx, thumb.ky);
+    rot(thumb.g2, -8 - 34 * t, thumb.p1, thumb.ky);
+
+    oForce.innerHTML = Math.round(12 + 128 * t) + "<span>N</span>";
+    oPts.textContent = Math.round(2 + 9 * t);
+    oLat.innerHTML = (62 - 4 * t).toFixed(0) + "<span>ms</span>";
+    oPwr.innerHTML = (1.2 + 6.4 * t).toFixed(1) + "<span>W</span>";
+    oBar.style.width = (t * 100) + "%";
+    oPct.textContent = Math.round(v) + "%";
+    stateName.textContent = label(t);
+  }
+
+  slider.addEventListener("input", function(){ render(+slider.value); });
+  render(0);
+
+  // One orchestrated moment on load: a calibration sweep to resting grip.
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var TARGET = 34;
+  if(reduce){
+    slider.value = TARGET; render(TARGET);
+  } else {
+    var start = null, DUR = 1100;
+    function ease(x){ return 1 - Math.pow(1 - x, 3); }
+    function step(ts){
+      if(start === null) start = ts;
+      var p = Math.min((ts - start) / DUR, 1);
+      var v = TARGET * ease(p);
+      slider.value = v; render(v);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    setTimeout(function(){ requestAnimationFrame(step); }, 420);
+  }
+})();
+</script>
+</body>
+</html>
