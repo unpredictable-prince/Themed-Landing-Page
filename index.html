@@ -1,529 +1,3757 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Meridian VII — Lathe Medical</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@75..150,400..900&family=Newsreader:opsz,wght@6..72,200..700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bone:#E6E4DE;
-  --paper:#F3F2EE;
-  --titanium:#CFCEC8;
-  --ink:#15171A;
-  --graphite:#3A3F45;
-  --steel:#787E86;
-  --hair:#BFBEB8;
-  --signal:#B7222B;
-  --led:#B7222B;
-  --shadow:rgba(21,23,26,.14);
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bone:#15181A;
-    --paper:#1E2225;
-    --titanium:#2A2F33;
-    --ink:#E8E6E0;
-    --graphite:#C2C3C0;
-    --steel:#8D9298;
-    --hair:#343A3E;
-    --signal:#E2564E;
-    --led:#E2564E;
-    --shadow:rgba(0,0,0,.5);
-  }
-}
-:root[data-theme="dark"]{
-  --bone:#15181A;--paper:#1E2225;--titanium:#2A2F33;--ink:#E8E6E0;--graphite:#C2C3C0;
-  --steel:#8D9298;--hair:#343A3E;--signal:#E2564E;--led:#E2564E;--shadow:rgba(0,0,0,.5);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT KRONOS // Synthetic Cybernetic Augmentation & Bionics</title>
+  <meta name="description" content="Next-Gen military-grade neural implants, synthetic chassis limbs, biometric diagnostics, and overclocking lab. Transcend organic limits with Project KRONOS cybernetics.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CDN Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--bone);
-  color:var(--ink);
-  font-family:"Newsreader",Georgia,"Times New Roman",serif;
-  font-size:17px;
-  line-height:1.62;
-  font-optical-sizing:auto;
-  -webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
-@media(max-width:600px){.wrap{padding:0 20px}}
+  <style>
+    /* ==========================================================================
+       1. CYBERNETIC DESIGN SYSTEM & PALETTE
+       ========================================================================== */
+    :root {
+      --bg-void: #05070a;
+      --bg-dark: #080c14;
+      --bg-panel: rgba(11, 16, 26, 0.82);
+      --bg-panel-hover: rgba(16, 24, 40, 0.94);
+      --bg-panel-trans: rgba(8, 12, 20, 0.65);
+      
+      --laser-crimson: #ff0055;
+      --laser-glow: rgba(255, 0, 85, 0.45);
+      --toxic-cyan: #00f0ff;
+      --cyan-glow: rgba(0, 240, 255, 0.4);
+      --holo-amber: #ffaa00;
+      --amber-glow: rgba(255, 170, 0, 0.4);
+      --matrix-green: #00ff66;
+      --matrix-glow: rgba(0, 255, 102, 0.35);
+      
+      --text-bright: #ffffff;
+      --text-main: #e2e8f0;
+      --text-muted: #8492a6;
+      --text-dim: #475569;
+      
+      --border-hud: rgba(0, 240, 255, 0.22);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-crimson: rgba(255, 0, 85, 0.35);
+      --border-amber: rgba(255, 170, 0, 0.35);
+      
+      --font-display: 'Orbitron', -apple-system, sans-serif;
+      --font-hud: 'Rajdhani', sans-serif;
+      --font-mono: 'Share Tech Mono', monospace;
+      --font-body: 'Space Grotesk', -apple-system, sans-serif;
+      
+      --hud-clip: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
+      --hud-clip-sm: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      --hud-clip-reverse: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+      
+      --glass-blur: blur(14px);
+    }
 
-.mech{font-family:"Anybody",ui-sans-serif,system-ui,sans-serif;font-variation-settings:"wdth" 100;}
-.num{font-family:"DM Mono","SFMono-Regular",ui-monospace,monospace;font-feature-settings:"tnum" 1;}
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-a{color:inherit}
-:focus-visible{outline:2.5px solid var(--signal);outline-offset:3px;border-radius:2px}
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
 
-/* ---------- masthead ---------- */
-.masthead{display:flex;align-items:baseline;gap:14px;padding:26px 0 0}
-.mark{
-  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 130;font-weight:800;
-  font-size:15px;letter-spacing:.04em;
-}
-.mark-sub{color:var(--steel);font-size:14.5px;font-style:italic}
-.masthead .cls{margin-left:auto;color:var(--steel);font-size:13px}
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% -10%, #0d172a 0%, #05070a 65%);
+      overflow-x: hidden;
+      position: relative;
+      background-attachment: fixed;
+    }
 
-/* ---------- hero ---------- */
-.hero{padding:34px 0 18px}
-.nameplate{
-  font-family:"Anybody",sans-serif;
-  font-variation-settings:"wdth" 132;
-  font-weight:800;
-  font-size:clamp(3.1rem,12.5vw,8.6rem);
-  line-height:.86;
-  letter-spacing:-.025em;
-  margin:0;
-}
-.nameplate .seven{color:var(--signal)}
-.lede{
-  max-width:52ch;margin:22px 0 0;font-size:clamp(1.12rem,2.3vw,1.45rem);
-  line-height:1.5;color:var(--graphite);
-}
+    /* Cyber grid overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* ---------- calibration console ---------- */
-.console{
-  margin-top:40px;
-  background:var(--paper);
-  border:1px solid var(--hair);
-  border-radius:20px;
-  box-shadow:0 1px 0 var(--hair), 0 26px 50px -38px var(--shadow);
-  overflow:hidden;
-}
-.console-grid{display:grid;grid-template-columns:1fr 268px}
-@media(max-width:920px){.console-grid{grid-template-columns:1fr}}
-.stage{padding:8px 10px 0;min-width:0}
-.stage svg{width:100%;height:auto;display:block}
+    /* Selection */
+    ::selection {
+      background: var(--laser-crimson);
+      color: #ffffff;
+      text-shadow: 0 0 8px #ff0055;
+    }
 
-.readouts{
-  border-left:1px solid var(--hair);
-  padding:26px 24px 20px;
-  display:flex;flex-direction:column;gap:20px;
-}
-@media(max-width:920px){.readouts{border-left:0;border-top:1px solid var(--hair)}}
-.state{display:flex;align-items:center;gap:9px}
-.led{width:9px;height:9px;border-radius:50%;background:var(--led);flex:none}
-@media(prefers-reduced-motion:no-preference){
-  .led{animation:beat 2.6s ease-in-out infinite}
-}
-@keyframes beat{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.34;transform:scale(.82)}}
-.state-name{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 118;font-weight:700;font-size:1.02rem}
-.r{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--hair);padding-bottom:9px}
-.r:last-of-type{border-bottom:0}
-.r-label{color:var(--steel);font-size:14.5px;font-style:italic}
-.r-val{font-family:"DM Mono",monospace;font-size:1.22rem;font-weight:500;font-feature-settings:"tnum" 1}
-.r-val span{font-size:.72em;color:var(--steel);margin-left:2px}
-.strain{height:4px;background:var(--titanium);border-radius:3px;overflow:hidden}
-.strain i{display:block;height:100%;background:var(--signal);width:0%}
-@media(prefers-reduced-motion:no-preference){.strain i{transition:width .09s linear}}
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-void);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border: 1px solid rgba(0, 240, 255, 0.3);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--toxic-cyan);
+      box-shadow: 0 0 10px var(--toxic-cyan);
+    }
 
-.control{
-  border-top:1px solid var(--hair);
-  padding:20px 26px 24px;
-  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
-}
-.control label{font-size:15.5px;color:var(--graphite);flex:none}
-input[type=range]{
-  -webkit-appearance:none;appearance:none;background:transparent;
-  flex:1 1 260px;min-width:180px;height:26px;margin:0;cursor:ew-resize;
-}
-input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--titanium);border-radius:2px}
-input[type=range]::-moz-range-track{height:3px;background:var(--titanium);border-radius:2px}
-input[type=range]::-webkit-slider-thumb{
-  -webkit-appearance:none;width:26px;height:26px;margin-top:-11.5px;border-radius:50%;
-  background:var(--paper);border:2.5px solid var(--ink);box-shadow:0 2px 6px -2px var(--shadow);
-}
-input[type=range]::-moz-range-thumb{
-  width:22px;height:22px;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink);
-}
-.pct{font-family:"DM Mono",monospace;font-size:15px;color:var(--steel);flex:none;min-width:4ch}
+    /* ==========================================================================
+       2. CUSTOM CYBERNETIC HUD CURSOR
+       ========================================================================== */
+    .hud-cursor-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--toxic-cyan);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 8px var(--toxic-cyan), 0 0 15px var(--toxic-cyan);
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
 
-/* ---------- bands ---------- */
-.band{padding:88px 0 0}
-.band-head{
-  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 122;font-weight:700;
-  font-size:clamp(1.55rem,3.6vw,2.3rem);letter-spacing:-.015em;line-height:1.1;margin:0 0 34px;
-  max-width:24ch;
-}
-.rows{display:grid;gap:30px}
-.row{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,54ch);gap:14px 48px;align-items:start}
-@media(max-width:780px){.row{grid-template-columns:1fr;gap:6px}}
-.row h3{
-  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 112;font-weight:700;
-  font-size:1.08rem;margin:0;line-height:1.3;
-}
-.row p{margin:0;color:var(--graphite)}
+    .hud-cursor-reticle {
+      width: 36px;
+      height: 36px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      border: 1.5px dashed rgba(0, 240, 255, 0.6);
+      border-radius: 50%;
+      transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  height 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.2s ease,
+                  transform 0.2s ease;
+    }
 
-/* ---------- spec table ---------- */
-.spec-scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:520px}
-caption{text-align:left;color:var(--steel);font-style:italic;font-size:15px;padding-bottom:12px}
-th,td{text-align:left;padding:13px 16px 13px 0;border-bottom:1px solid var(--hair);vertical-align:baseline}
-th{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 108;font-weight:600;font-size:.98rem;width:38%}
-td{font-family:"DM Mono",monospace;font-size:.95rem;font-feature-settings:"tnum" 1;color:var(--graphite)}
-td em{font-family:"Newsreader",serif;font-size:1.02rem;font-style:italic;color:var(--steel)}
+    .hud-cursor-reticle::before,
+    .hud-cursor-reticle::after {
+      content: '';
+      position: absolute;
+      background: var(--toxic-cyan);
+    }
+    /* Horizontal crosshair ticks */
+    .hud-cursor-reticle::before {
+      top: 50%;
+      left: -6px;
+      right: -6px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--toxic-cyan) 3px, transparent 3px, transparent calc(100% - 3px), var(--toxic-cyan) calc(100% - 3px));
+      transform: translateY(-50%);
+    }
+    /* Vertical crosshair ticks */
+    .hud-cursor-reticle::after {
+      left: 50%;
+      top: -6px;
+      bottom: -6px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--toxic-cyan) 3px, transparent 3px, transparent calc(100% - 3px), var(--toxic-cyan) calc(100% - 3px));
+      transform: translateX(-50%);
+    }
 
-/* ---------- sequence ---------- */
-.steps{counter-reset:s;display:grid;gap:0}
-.step{
-  counter-increment:s;display:grid;grid-template-columns:4.2rem minmax(0,58ch);
-  gap:12px 24px;padding:22px 0;border-top:1px solid var(--hair);align-items:start;
-}
-.step:last-child{border-bottom:1px solid var(--hair)}
-.step::before{
-  content:counter(s,decimal-leading-zero);
-  font-family:"DM Mono",monospace;font-size:1.5rem;color:var(--signal);line-height:1.15;
-}
-.step h3{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 112;font-weight:700;font-size:1.06rem;margin:0 0 4px}
-.step p{margin:0;color:var(--graphite)}
-.step-dur{color:var(--steel);font-style:italic;font-size:15px}
-@media(max-width:600px){.step{grid-template-columns:3rem minmax(0,1fr)}}
+    .cursor-active .hud-cursor-reticle {
+      width: 52px;
+      height: 52px;
+      border-color: var(--laser-crimson);
+      border-style: solid;
+      box-shadow: 0 0 20px var(--laser-glow);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+    .cursor-active .hud-cursor-dot {
+      background: var(--laser-crimson);
+      box-shadow: 0 0 12px var(--laser-crimson);
+      transform: translate(-50%, -50%) scale(1.6);
+    }
 
-/* ---------- owners ---------- */
-.owners{display:grid;grid-template-columns:1fr 1fr;gap:44px}
-@media(max-width:780px){.owners{grid-template-columns:1fr;gap:34px}}
-blockquote{margin:0;font-size:clamp(1.18rem,2.6vw,1.5rem);line-height:1.42;max-width:32ch}
-.who{margin-top:14px;color:var(--steel);font-size:15px;font-style:italic}
-.who b{font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 110;font-style:normal;font-weight:700;color:var(--ink);font-size:14.5px}
+    @media (hover: none) and (pointer: coarse) {
+      .hud-cursor-dot, .hud-cursor-reticle {
+        display: none !important;
+      }
+    }
 
-/* ---------- cta ---------- */
-.cta{
-  margin-top:96px;background:var(--paper);border:1px solid var(--hair);
-  border-radius:20px;padding:clamp(30px,5vw,54px);
-  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:30px 48px;align-items:end;
-}
-@media(max-width:780px){.cta{grid-template-columns:1fr;align-items:start}}
-.cta h2{
-  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 126;font-weight:800;
-  font-size:clamp(1.9rem,5vw,3.1rem);line-height:.98;letter-spacing:-.02em;margin:0 0 14px;
-}
-.cta p{margin:0;color:var(--graphite);max-width:46ch}
-.btn{
-  display:inline-block;background:var(--ink);color:var(--bone);text-decoration:none;
-  font-family:"Anybody",sans-serif;font-variation-settings:"wdth" 116;font-weight:700;font-size:1.05rem;
-  padding:17px 30px;border-radius:999px;white-space:nowrap;
-}
-.btn:hover{background:var(--signal)}
-@media(prefers-reduced-motion:no-preference){.btn{transition:background .16s ease}}
+    /* ==========================================================================
+       3. UTILITIES & HUD MICRO-ELEMENTS
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
 
-/* ---------- footer ---------- */
-footer{margin-top:80px;padding:30px 0 56px;border-top:1px solid var(--hair);color:var(--steel);font-size:14.5px}
-.foot-grid{display:flex;flex-wrap:wrap;gap:12px 40px;align-items:baseline}
-footer p{margin:0;max-width:62ch}
-.disclaim{margin-top:18px;font-style:italic}
-</style>
+    .font-orbitron { font-family: var(--font-display); }
+    .font-rajdhani { font-family: var(--font-hud); }
+    .font-mono { font-family: var(--font-mono); }
+    .font-body { font-family: var(--font-body); }
+
+    /* HUD Corner Target Brackets */
+    .hud-bracket {
+      position: relative;
+    }
+    .hud-bracket::before,
+    .hud-bracket::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-color: var(--toxic-cyan);
+      pointer-events: none;
+      transition: border-color 0.3s ease;
+    }
+    .hud-bracket::before {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid;
+      border-left: 2px solid;
+    }
+    .hud-bracket::after {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 2px solid;
+      border-right: 2px solid;
+    }
+
+    .hud-bracket-crimson::before,
+    .hud-bracket-crimson::after {
+      border-color: var(--laser-crimson);
+    }
+    .hud-bracket-amber::before,
+    .hud-bracket-amber::after {
+      border-color: var(--holo-amber);
+    }
+
+    /* Scifi Badges */
+    .hud-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.85rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-hud);
+      border-left: 3px solid var(--toxic-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--toxic-cyan);
+      clip-path: var(--hud-clip-sm);
+    }
+
+    .hud-badge-crimson {
+      background: rgba(255, 0, 85, 0.08);
+      border-color: var(--border-crimson);
+      border-left: 3px solid var(--laser-crimson);
+      color: var(--laser-crimson);
+    }
+
+    .hud-badge-amber {
+      background: rgba(255, 170, 0, 0.08);
+      border-color: var(--border-amber);
+      border-left: 3px solid var(--holo-amber);
+      color: var(--holo-amber);
+    }
+
+    .hud-badge-green {
+      background: rgba(0, 255, 102, 0.08);
+      border-color: rgba(0, 255, 102, 0.35);
+      border-left: 3px solid var(--matrix-green);
+      color: var(--matrix-green);
+    }
+
+    /* Glowing Scanning Laser Line */
+    .laser-scanner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--toxic-cyan) 50%, transparent 100%);
+      box-shadow: 0 0 15px var(--toxic-cyan);
+      animation: scan-vertical 4s ease-in-out infinite alternate;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    @keyframes scan-vertical {
+      0% { top: 5%; opacity: 0.2; }
+      50% { opacity: 0.8; }
+      100% { top: 95%; opacity: 0.2; }
+    }
+
+    /* Text Gradients */
+    .text-glow-cyan {
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.2);
+    }
+    .text-glow-crimson {
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(255, 0, 85, 0.7), 0 0 40px rgba(255, 0, 85, 0.3);
+    }
+    .text-glow-amber {
+      color: #ffffff;
+      text-shadow: 0 0 20px rgba(255, 170, 0, 0.7), 0 0 40px rgba(255, 170, 0, 0.3);
+    }
+
+    /* Buttons */
+    .hud-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      padding: 0.85rem 1.75rem;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      clip-path: var(--hud-clip);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      text-decoration: none;
+      border: none;
+      outline: none;
+      user-select: none;
+    }
+
+    .hud-btn-primary {
+      background: linear-gradient(135deg, var(--laser-crimson) 0%, #b8003d 100%);
+      color: #ffffff;
+      box-shadow: 0 0 25px var(--laser-glow), inset 0 0 12px rgba(255, 255, 255, 0.2);
+      border: 1px solid #ff4d88;
+    }
+    .hud-btn-primary:hover {
+      background: linear-gradient(135deg, #ff2670 0%, var(--laser-crimson) 100%);
+      box-shadow: 0 0 35px var(--laser-crimson), inset 0 0 15px rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .hud-btn-secondary {
+      background: rgba(11, 16, 26, 0.8);
+      color: var(--toxic-cyan);
+      border: 1px solid var(--border-hud);
+      backdrop-filter: var(--glass-blur);
+    }
+    .hud-btn-secondary:hover {
+      background: rgba(0, 240, 255, 0.12);
+      border-color: var(--toxic-cyan);
+      box-shadow: 0 0 20px var(--cyan-glow);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .hud-btn-amber {
+      background: rgba(255, 170, 0, 0.12);
+      color: var(--holo-amber);
+      border: 1px solid var(--border-amber);
+    }
+    .hud-btn-amber:hover {
+      background: rgba(255, 170, 0, 0.25);
+      box-shadow: 0 0 20px var(--amber-glow);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .hud-btn-sm {
+      padding: 0.45rem 1rem;
+      font-size: 0.75rem;
+      clip-path: var(--hud-clip-sm);
+    }
+
+    /* Caution Industrial Hazard Stripes */
+    .caution-stripe {
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255, 170, 0, 0.15),
+        rgba(255, 170, 0, 0.15) 10px,
+        transparent 10px,
+        transparent 20px
+      );
+    }
+
+    /* Pulse dot */
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--matrix-green);
+      box-shadow: 0 0 8px var(--matrix-green);
+      animation: pulse-ring 2s infinite;
+      display: inline-block;
+    }
+    @keyframes pulse-ring {
+      0% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0.4; transform: scale(0.9); }
+    }
+
+    /* ==========================================================================
+       4. CYBERNETIC HUD NAVIGATION
+       ========================================================================== */
+    .hud-navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 0.85rem 0;
+      transition: all 0.3s ease;
+    }
+    .hud-navbar.scrolled {
+      background: rgba(5, 8, 14, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-hud);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .hud-nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-decoration: none;
+    }
+    .hud-brand-emblem {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 0, 85, 0.1);
+      border: 1.5px solid var(--laser-crimson);
+      clip-path: var(--hud-clip-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--laser-crimson);
+      box-shadow: 0 0 15px var(--laser-glow);
+    }
+    .hud-brand-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.15em;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .hud-brand-status {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--toxic-cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .hud-links {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    .hud-link {
+      font-family: var(--font-hud);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+      position: relative;
+    }
+    .hud-link::before {
+      content: '// ';
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+    .hud-link:hover {
+      color: var(--toxic-cyan);
+      text-shadow: 0 0 10px var(--toxic-cyan);
+    }
+
+    .hud-telemetry-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid var(--border-hud);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--toxic-cyan);
+    }
+
+    /* Sound Controller */
+    .sound-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      transition: all 0.2s ease;
+    }
+    .sound-toggle-btn.sound-on {
+      border-color: var(--toxic-cyan);
+      color: var(--toxic-cyan);
+      background: rgba(0, 240, 255, 0.08);
+    }
+    .equalizer-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+      width: 14px;
+    }
+    .eq-bar {
+      width: 2px;
+      background: currentColor;
+      height: 3px;
+      transition: height 0.15s ease;
+    }
+    .sound-on .eq-bar:nth-child(1) { animation: eq-anim 0.6s infinite ease-in-out alternate; }
+    .sound-on .eq-bar:nth-child(2) { animation: eq-anim 0.8s infinite 0.2s ease-in-out alternate; }
+    .sound-on .eq-bar:nth-child(3) { animation: eq-anim 0.5s infinite 0.4s ease-in-out alternate; }
+    @keyframes eq-anim {
+      0% { height: 2px; }
+      100% { height: 12px; }
+    }
+
+    .hud-mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Mobile Drawer */
+    .hud-mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 10, 0.98);
+      backdrop-filter: blur(25px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .hud-mobile-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-nav-link {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .mobile-nav-link:hover {
+      color: var(--toxic-cyan);
+    }
+
+    @media (max-width: 992px) {
+      .hud-links, .hud-telemetry-badge {
+        display: none;
+      }
+      .hud-mobile-toggle {
+        display: block;
+      }
+    }
+
+    /* ==========================================================================
+       5. HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 8.5rem 0 5rem 0;
+      overflow: hidden;
+    }
+    #biometric-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .hero-glitch-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.35rem 1rem;
+      background: rgba(255, 0, 85, 0.08);
+      border: 1px solid var(--border-crimson);
+      border-left: 3px solid var(--laser-crimson);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--laser-crimson);
+      margin-bottom: 1.5rem;
+      clip-path: var(--hud-clip-sm);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 6.2vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 780px;
+      margin: 0 auto 2.5rem auto;
+      font-family: var(--font-hud);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+
+    /* Live Stat Ribbon */
+    .diagnostic-ribbon {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+    }
+    .diagnostic-card {
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem 1rem;
+      text-align: left;
+      transition: all 0.3s ease;
+      clip-path: var(--hud-clip-sm);
+    }
+    .diagnostic-card:hover {
+      border-color: var(--toxic-cyan);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+      transform: translateY(-3px);
+    }
+    .diag-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .diag-val {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0.3rem 0;
+    }
+    .diag-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .diagnostic-ribbon {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* ==========================================================================
+       6. SECTION HEADERS & GENERAL WRAPPERS
+       ========================================================================== */
+    .section-spacing {
+      padding: 6.5rem 0;
+      position: relative;
+    }
+    .section-hud-header {
+      text-align: center;
+      max-width: 750px;
+      margin: 0 auto 3.5rem auto;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.2vw, 3rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      font-family: var(--font-hud);
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       7. 3D WIREFRAME HOLOGRAM VIEWER LAB
+       ========================================================================== */
+    .hologram-lab-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2rem;
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      padding: 2rem;
+      clip-path: var(--hud-clip);
+    }
+    .holo-canvas-wrapper {
+      position: relative;
+      min-height: 380px;
+      background: rgba(4, 7, 12, 0.85);
+      border: 1px solid var(--border-hud);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    #holo-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+    #holo-canvas:active {
+      cursor: grabbing;
+    }
+    .holo-overlay-info {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--toxic-cyan);
+      pointer-events: none;
+    }
+    .holo-controls-bar {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      right: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(5, 7, 10, 0.85);
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+    .holo-layer-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .holo-layer-pill {
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+    .holo-layer-pill.active {
+      background: rgba(0, 240, 255, 0.15);
+      border-color: var(--toxic-cyan);
+      color: var(--toxic-cyan);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    @media (max-width: 900px) {
+      .hologram-lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ==========================================================================
+       8. AUGMENTATION CATALOG & FILTER BAR
+       ========================================================================== */
+    .catalog-filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-panel-trans);
+      border: 1px solid var(--border-subtle);
+    }
+    .filter-pills-wrap {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.4rem 0.9rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      cursor: pointer;
+      clip-path: var(--hud-clip-sm);
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0, 240, 255, 0.12);
+      border-color: var(--toxic-cyan);
+      color: var(--toxic-cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+    .catalog-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(5, 7, 10, 0.8);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.85rem;
+      border-radius: 2px;
+    }
+    .catalog-search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      width: 170px;
+    }
+    .catalog-search-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .module-card {
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      clip-path: var(--hud-clip);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .module-card:hover {
+      border-color: var(--toxic-cyan);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.12);
+      transform: translateY(-5px);
+    }
+    .module-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .module-icon-box {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-hud);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--toxic-cyan);
+      clip-path: var(--hud-clip-sm);
+    }
+    .module-icon-box.crimson {
+      background: rgba(255, 0, 85, 0.08);
+      border-color: var(--border-crimson);
+      color: var(--laser-crimson);
+    }
+    .module-icon-box.amber {
+      background: rgba(255, 170, 0, 0.08);
+      border-color: var(--border-amber);
+      color: var(--holo-amber);
+    }
+
+    .module-tier-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+    .module-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+    .module-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1.75rem;
+    }
+
+    .module-specs {
+      background: rgba(5, 7, 10, 0.6);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem;
+      margin-bottom: 1.75rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-dim);
+      margin-bottom: 0.4rem;
+    }
+    .spec-bar-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .spec-bar-fill {
+      height: 100%;
+      background: var(--toxic-cyan);
+      box-shadow: 0 0 8px var(--toxic-cyan);
+    }
+    .spec-bar-fill.crimson {
+      background: var(--laser-crimson);
+      box-shadow: 0 0 8px var(--laser-crimson);
+    }
+
+    .module-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.25rem;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       9. BIOMETRIC DIAGNOSTICS & CONFIGURATOR
+       ========================================================================== */
+    .configurator-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      padding: 2.5rem;
+      clip-path: var(--hud-clip);
+    }
+
+    @media (max-width: 900px) {
+      .configurator-wrapper {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .wireframe-container {
+      background: rgba(4, 7, 12, 0.9);
+      border: 1px solid var(--border-hud);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 460px;
+    }
+
+    .cyborg-svg-wrap {
+      width: 100%;
+      max-width: 260px;
+      position: relative;
+    }
+
+    /* Hotspot Points */
+    .hotspot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--toxic-cyan);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 12px var(--toxic-cyan);
+      cursor: pointer;
+      animation: hotspot-pulse 1.8s infinite;
+      transition: all 0.2s ease;
+    }
+    .hotspot::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 1px dashed var(--toxic-cyan);
+      border-radius: 50%;
+      animation: spin-cw 4s linear infinite;
+    }
+    .hotspot.crimson {
+      background: var(--laser-crimson);
+      box-shadow: 0 0 12px var(--laser-crimson);
+    }
+    .hotspot.crimson::after {
+      border-color: var(--laser-crimson);
+    }
+    .hotspot.amber {
+      background: var(--holo-amber);
+      box-shadow: 0 0 12px var(--holo-amber);
+    }
+    .hotspot.amber::after {
+      border-color: var(--holo-amber);
+    }
+    @keyframes hotspot-pulse {
+      0% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+      50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(0.85); opacity: 0.7; }
+    }
+    @keyframes spin-cw {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .config-controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .preset-chips-wrap {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 1.25rem 0;
+    }
+    .preset-chip {
+      padding: 0.35rem 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+    .preset-chip:hover {
+      border-color: var(--toxic-cyan);
+      color: var(--toxic-cyan);
+    }
+
+    .toggle-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    @media (max-width: 600px) {
+      .toggle-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .config-toggle-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.1rem;
+      background: rgba(5, 7, 10, 0.6);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      clip-path: var(--hud-clip-sm);
+    }
+    .config-toggle-item.active {
+      border-color: var(--toxic-cyan);
+      background: rgba(0, 240, 255, 0.07);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+    }
+    .config-toggle-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .custom-switch {
+      width: 36px;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9px;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+    .switch-knob {
+      width: 14px;
+      height: 14px;
+      background: #ffffff;
+      border-radius: 50%;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s ease;
+    }
+    .config-toggle-item.active .custom-switch {
+      background: var(--toxic-cyan);
+      box-shadow: 0 0 10px var(--toxic-cyan);
+    }
+    .config-toggle-item.active .switch-knob {
+      transform: translateX(18px);
+      background: #000;
+    }
+
+    .config-results-hud {
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid var(--border-hud);
+      padding: 1.25rem 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .res-metric label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .res-metric span {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    /* ==========================================================================
+       10. BENCHMARK & OVERCLOCK LAB SECTION
+       ========================================================================== */
+    .benchmark-lab-box {
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      padding: 2.5rem;
+      clip-path: var(--hud-clip);
+    }
+    .bench-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+    @media (max-width: 900px) {
+      .bench-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .oscilloscope-box {
+      background: rgba(4, 7, 12, 0.95);
+      border: 1px solid var(--border-hud);
+      padding: 1.5rem;
+      position: relative;
+    }
+    #oscilloscope-canvas {
+      width: 100%;
+      height: 180px;
+      display: block;
+    }
+    .bench-gauges-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .gauge-item {
+      background: rgba(5, 7, 10, 0.6);
+      border: 1px solid var(--border-subtle);
+      padding: 1rem;
+    }
+    .gauge-head {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+    .gauge-val-display {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+    }
+    .gauge-meter-track {
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      margin-top: 0.5rem;
+    }
+    .gauge-meter-fill {
+      height: 100%;
+      background: var(--toxic-cyan);
+      box-shadow: 0 0 10px var(--toxic-cyan);
+      transition: width 0.3s ease;
+    }
+
+    .bench-telemetry-feed {
+      background: rgba(4, 7, 12, 0.95);
+      border: 1px solid var(--border-subtle);
+      padding: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .feed-logs {
+      overflow-y: auto;
+      max-height: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .log-line {
+      line-height: 1.4;
+      color: var(--text-muted);
+    }
+    .log-line.green { color: var(--matrix-green); }
+    .log-line.cyan { color: var(--toxic-cyan); }
+    .log-line.crimson { color: var(--laser-crimson); }
+    .log-line.amber { color: var(--holo-amber); }
+
+    /* ==========================================================================
+       11. FAQ ACCORDION TERMINAL & INTERACTIVE CLI
+       ========================================================================== */
+    .faq-terminal-box {
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-subtle);
+      clip-path: var(--hud-clip);
+      overflow: hidden;
+    }
+    .terminal-header-bar {
+      background: rgba(5, 7, 10, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .tdot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .tdot-red { background: #ff5f56; }
+    .tdot-yellow { background: #ffbd2e; }
+    .tdot-green { background: #27c93f; }
+
+    .faq-list {
+      padding: 1.5rem;
+    }
+    .faq-terminal-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .faq-terminal-item:last-child {
+      border-bottom: none;
+    }
+    .faq-trigger {
+      width: 100%;
+      text-align: left;
+      padding: 1.35rem 0.5rem;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: var(--font-hud);
+      font-size: 1.15rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .faq-trigger:hover {
+      color: var(--toxic-cyan);
+    }
+    .faq-trigger svg {
+      transition: transform 0.3s ease;
+      color: var(--toxic-cyan);
+    }
+    .faq-terminal-item.open .faq-trigger svg {
+      transform: rotate(180deg);
+    }
+    .faq-content {
+      padding: 0 0.5rem 1.5rem 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      display: none;
+    }
+    .faq-terminal-item.open .faq-content {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Interactive Terminal CLI Emulator */
+    .terminal-cli-wrap {
+      margin-top: 2rem;
+      background: rgba(3, 5, 8, 0.95);
+      border: 1px solid var(--border-hud);
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      clip-path: var(--hud-clip-sm);
+    }
+    .cli-history {
+      max-height: 160px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .cli-form {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 0.75rem;
+    }
+    .cli-prompt {
+      color: var(--laser-crimson);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .cli-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--toxic-cyan);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    .cli-chips {
+      display: flex;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .cli-chip {
+      padding: 0.2rem 0.5rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: var(--toxic-cyan);
+      font-size: 0.68rem;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+
+    /* Final CTA Card */
+    .final-cta-section {
+      margin-top: 5.5rem;
+    }
+    .final-cta-card {
+      background: var(--bg-panel);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--border-crimson);
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      clip-path: var(--hud-clip);
+      overflow: hidden;
+    }
+    .deployment-input-group {
+      display: flex;
+      max-width: 540px;
+      margin: 2rem auto 0 auto;
+      gap: 0.5rem;
+    }
+    .terminal-input {
+      flex: 1;
+      background: rgba(5, 7, 10, 0.9);
+      border: 1px solid var(--border-hud);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      padding: 0.85rem 1.25rem;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .terminal-input:focus {
+      border-color: var(--toxic-cyan);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    }
+    @media (max-width: 600px) {
+      .deployment-input-group {
+        flex-direction: column;
+      }
+    }
+
+    /* ==========================================================================
+       12. TECHNICAL FOOTER
+       ========================================================================== */
+    .hud-footer {
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(4, 6, 10, 0.98);
+      padding: 4.5rem 0 2rem 0;
+      position: relative;
+      z-index: 2;
+    }
+    .crypto-hash-bar {
+      background: rgba(5, 7, 10, 0.8);
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-heading {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 1.25rem;
+    }
+    .footer-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .footer-link-item {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+    .footer-link-item:hover {
+      color: var(--toxic-cyan);
+      transform: translateX(4px);
+    }
+    .footer-bottom-row {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* ==========================================================================
+       13. MODALS (SPECS, REQUISITION DOSSIER, SHORTCUTS)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(15px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-hud-card {
+      background: rgba(8, 12, 18, 0.96);
+      border: 1px solid var(--border-hud);
+      box-shadow: 0 0 50px rgba(0, 240, 255, 0.25);
+      width: 100%;
+      max-width: 620px;
+      padding: 2.5rem;
+      clip-path: var(--hud-clip);
+      position: relative;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open .modal-hud-card {
+      transform: scale(1);
+    }
+    .modal-close-trigger {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    .modal-close-trigger:hover {
+      color: var(--laser-crimson);
+      transform: scale(1.15);
+    }
+
+    /* Signature canvas for Requisition Dossier */
+    .signature-pad-wrap {
+      background: #020406;
+      border: 1px dashed var(--border-hud);
+      margin: 1.25rem 0;
+      position: relative;
+    }
+    #signature-canvas {
+      width: 100%;
+      height: 110px;
+      display: block;
+      cursor: crosshair;
+    }
+
+    /* Toast Container */
+    #toast-container {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 999999;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      pointer-events: none;
+    }
+    .hud-toast {
+      background: rgba(8, 12, 20, 0.95);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border-hud);
+      border-left: 3px solid var(--toxic-cyan);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 240, 255, 0.2);
+      padding: 0.85rem 1.25rem;
+      color: #ffffff;
+      font-family: var(--font-hud);
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      clip-path: var(--hud-clip-sm);
+      animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+      max-width: 380px;
+    }
+    @keyframes toast-in {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Floating Shortcuts Helper Pill */
+    .shortcuts-pill-float {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      z-index: 900;
+      background: rgba(8, 12, 20, 0.85);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
+    }
+    .shortcuts-pill-float:hover {
+      border-color: var(--toxic-cyan);
+      color: var(--toxic-cyan);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header class="masthead">
-    <span class="mark">LATHE</span>
-    <span class="mark-sub">upper-limb systems, since 2019</span>
-    <span class="cls num">Class II · CE 0483</span>
+  <!-- Custom Cybernetic HUD Cursor -->
+  <div class="hud-cursor-dot" id="cursor-dot"></div>
+  <div class="hud-cursor-reticle" id="cursor-reticle"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Shortcuts Floating Helper -->
+  <div class="shortcuts-pill-float" onclick="openModal('shortcuts-modal')" title="Keyboard Shortcuts">
+    <i data-lucide="command" style="width: 13px; height: 13px;"></i>
+    <span>SHORTCUTS [?]</span>
+  </div>
+
+  <!-- ==========================================================================
+       HUD HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="hud-navbar" id="hud-nav">
+    <div class="container hud-nav-container">
+      <a href="#hero" class="hud-brand">
+        <div class="hud-brand-emblem">
+          <i data-lucide="shield-alert" style="width: 22px; height: 22px;"></i>
+        </div>
+        <div>
+          <div class="hud-brand-title">KRONOS<span style="color: var(--laser-crimson);">//</span>BIO</div>
+          <div class="hud-brand-status">
+            <span class="pulse-dot"></span>
+            <span>CORE: ONLINE | SYNC: 99.8%</span>
+          </div>
+        </div>
+      </a>
+
+      <ul class="hud-links">
+        <li><a href="#hero" class="hud-link">Overview</a></li>
+        <li><a href="#hologram" class="hud-link">Holo-Lab</a></li>
+        <li><a href="#catalog" class="hud-link">Augmentations</a></li>
+        <li><a href="#diagnostics" class="hud-link">Diagnostics</a></li>
+        <li><a href="#benchmark" class="hud-link">Benchmark</a></li>
+        <li><a href="#faq" class="hud-link">Declassified Log</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <!-- Audio Synth Toggle Button -->
+        <button class="sound-toggle-btn sound-on" id="sound-btn" onclick="toggleAudioEngine()" title="Toggle Cybernetic Audio Synth">
+          <div class="equalizer-bars">
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+            <div class="eq-bar"></div>
+          </div>
+          <span id="sound-text">AUDIO ON</span>
+        </button>
+
+        <div class="hud-telemetry-badge">
+          <i data-lucide="activity" style="width: 14px; height: 14px;"></i>
+          <span id="live-ping-val">0.08ms</span>
+        </div>
+
+        <button class="hud-btn hud-btn-primary hud-btn-sm" onclick="openRequisitionDossier()">
+          <i data-lucide="zap" style="width: 14px; height: 14px;"></i>
+          Initiate Augment
+        </button>
+
+        <button class="hud-mobile-toggle" id="mobile-toggle" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+          <i data-lucide="menu" style="width: 26px; height: 26px;"></i>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <section class="hero">
-    <h1 class="nameplate">Meridian<span class="seven"> VII</span></h1>
-    <p class="lede">A myoelectric forearm that reads intent at the nerve instead of guessing from muscle twitch. Eighteen grips, a wrist that turns all the way round, and a thumb that knows the difference between an egg and a door handle.</p>
+  <!-- Mobile Drawer Menu -->
+  <div class="hud-mobile-menu" id="mobile-menu">
+    <button class="modal-close-trigger" onclick="toggleMobileMenu()" style="top: 2rem; right: 2rem;" aria-label="Close Mobile Menu">
+      <i data-lucide="x" style="width: 28px; height: 28px;"></i>
+    </button>
+    <a href="#hero" class="mobile-nav-link" onclick="toggleMobileMenu()">// Overview</a>
+    <a href="#hologram" class="mobile-nav-link" onclick="toggleMobileMenu()">// Holo-Lab</a>
+    <a href="#catalog" class="mobile-nav-link" onclick="toggleMobileMenu()">// Augmentations</a>
+    <a href="#diagnostics" class="mobile-nav-link" onclick="toggleMobileMenu()">// Diagnostics</a>
+    <a href="#benchmark" class="mobile-nav-link" onclick="toggleMobileMenu()">// Benchmark</a>
+    <a href="#faq" class="mobile-nav-link" onclick="toggleMobileMenu()">// Declassified Log</a>
+    <button class="hud-btn hud-btn-primary" onclick="toggleMobileMenu(); openRequisitionDossier();">
+      <i data-lucide="zap" style="width: 16px; height: 16px;"></i>
+      Initiate Augment
+    </button>
+  </div>
 
-    <div class="console">
-      <div class="console-grid">
-        <div class="stage">
-          <svg viewBox="0 0 920 540" role="img" aria-label="Technical drawing of the Meridian VII forearm and hand, curling as grip force increases">
-            <defs>
-              <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-                <line x1="0" y1="0" x2="0" y2="7" stroke="var(--hair)" stroke-width="1.6"/>
-              </pattern>
-            </defs>
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION (Biometric Canvas & Cyber HUD)
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <canvas id="biometric-canvas"></canvas>
+      <div class="laser-scanner"></div>
 
-            <g stroke="var(--ink)" fill="var(--paper)" stroke-width="2" stroke-linejoin="round">
-
-              <!-- socket cuff -->
-              <rect x="70" y="192" width="178" height="140" rx="30"/>
-              <g stroke="var(--hair)" stroke-width="2">
-                <line x1="112" y1="212" x2="112" y2="312"/>
-                <line x1="144" y1="212" x2="144" y2="312"/>
-                <line x1="176" y1="212" x2="176" y2="312"/>
-                <line x1="208" y1="212" x2="208" y2="312"/>
-              </g>
-              <circle cx="92" cy="216" r="5.5" fill="var(--led)" stroke="none"/>
-
-              <!-- forearm shell -->
-              <path d="M244 198 C 372 194, 466 212, 566 230 L566 296 C 466 314, 372 332, 244 328 Z"/>
-              <path d="M300 228 C 380 226, 450 240, 520 252 L520 276 C 450 288, 380 302, 300 300 Z"
-                    fill="url(#hatch)" stroke="var(--hair)" stroke-width="1.5"/>
-
-              <!-- wrist joint -->
-              <circle cx="586" cy="263" r="34"/>
-              <circle cx="586" cy="263" r="13" fill="var(--titanium)"/>
-              <path d="M586 229 A34 34 0 0 1 617 250" fill="none" stroke="var(--signal)" stroke-width="3.4" stroke-linecap="round"/>
-
-              <!-- palm -->
-              <path d="M606 204 C 648 196, 698 200, 722 210 L726 318 C 698 330, 648 332, 606 322 Z"/>
-
-              <!-- fingers -->
-              <g id="fingers"></g>
-
-              <!-- thumb -->
-              <g id="thumb"></g>
-            </g>
-
-            <!-- callouts -->
-            <g stroke="var(--steel)" stroke-width="1.4" fill="none" stroke-dasharray="4 4">
-              <path d="M158 192 V 128 H 210"/>
-              <path d="M586 229 V 96 H 640"/>
-              <path d="M828 300 V 404 H 770"/>
-            </g>
-            <g fill="var(--steel)" font-family="Anybody, sans-serif" font-size="16" font-weight="600">
-              <text x="216" y="133">Neural cuff, 8 channels</text>
-              <text x="646" y="101">Torque cell</text>
-              <text x="608" y="409" text-anchor="end">Pressure skin</text>
-            </g>
-
-            <!-- scale bar -->
-            <g stroke="var(--hair)" stroke-width="1.6">
-              <line x1="70" y1="470" x2="862" y2="470"/>
-              <line x1="70" y1="462" x2="70" y2="478"/>
-              <line x1="862" y1="462" x2="862" y2="478"/>
-            </g>
-            <text x="466" y="496" text-anchor="middle" fill="var(--steel)" font-family="DM Mono, monospace" font-size="15">382 mm, cuff to fingertip</text>
-          </svg>
+      <div class="container hero-inner">
+        <!-- Glitch Alert Tag -->
+        <div class="hero-glitch-badge">
+          <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
+          <span>PROJECT KRONOS // MIL-SPEC CYBERNETICS // MK-VIII</span>
         </div>
 
-        <div class="readouts">
-          <div class="state">
-            <span class="led" aria-hidden="true"></span>
-            <span class="state-name" id="stateName">Open</span>
+        <!-- Headline -->
+        <h1 class="hero-title">
+          <span class="text-glow-crimson" style="color: var(--laser-crimson);">TRANSCEND</span> ORGANIC LIMITS<br>
+          <span class="text-glow-cyan" style="color: var(--toxic-cyan);">NEXT-GEN</span> CYBERNETICS
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="hero-subtitle">
+          Engineered for cognitive supremacy and physical dominance. Deploying sub-millisecond neural bridges, carbon-nanotube hydraulic armatures, and sub-dermal kinetic dissipation matrices.
+        </p>
+
+        <!-- CTA Group -->
+        <div class="hero-actions">
+          <a href="#diagnostics" class="hud-btn hud-btn-primary" id="hero-cta-btn">
+            <i data-lucide="cpu" style="width: 18px; height: 18px;"></i>
+            <span>Configure Unit</span>
+          </a>
+          <button class="hud-btn hud-btn-secondary" onclick="triggerScanSound(); showToast('Biometric Calibration Complete: Subject Sync 99.8%');">
+            <i data-lucide="crosshair" style="width: 18px; height: 18px;"></i>
+            <span>Run System Scan</span>
+          </button>
+          <a href="#benchmark" class="hud-btn hud-btn-amber">
+            <i data-lucide="gauge" style="width: 18px; height: 18px;"></i>
+            <span>Overclock Lab</span>
+          </a>
+        </div>
+
+        <!-- Live Diagnostic Stat Ribbon -->
+        <div class="diagnostic-ribbon">
+          <div class="diagnostic-card hud-bracket">
+            <div class="diag-label">
+              <span>Neural Latency</span>
+              <i data-lucide="zap" style="width: 14px; height: 14px; color: var(--toxic-cyan);"></i>
+            </div>
+            <div class="diag-val" style="color: var(--toxic-cyan);">&lt; 0.12ms</div>
+            <div class="diag-sub">Instantaneous Reflex Bus</div>
           </div>
-          <div class="r"><span class="r-label">Grip force</span><span class="r-val" id="oForce">12<span>N</span></span></div>
-          <div class="r"><span class="r-label">Contact points</span><span class="r-val" id="oPts">2</span></div>
-          <div class="r"><span class="r-label">Response</span><span class="r-val" id="oLat">62<span>ms</span></span></div>
-          <div class="r"><span class="r-label">Power draw</span><span class="r-val" id="oPwr">1.2<span>W</span></span></div>
-          <div class="strain" aria-hidden="true"><i id="oBar"></i></div>
+
+          <div class="diagnostic-card hud-bracket">
+            <div class="diag-label">
+              <span>Kinetic Torque</span>
+              <i data-lucide="shield" style="width: 14px; height: 14px; color: var(--laser-crimson);"></i>
+            </div>
+            <div class="diag-val" style="color: var(--laser-crimson);">850 Nm</div>
+            <div class="diag-sub">Hydraulic Force Rating</div>
+          </div>
+
+          <div class="diagnostic-card hud-bracket">
+            <div class="diag-label">
+              <span>Battery Cell</span>
+              <i data-lucide="battery-charging" style="width: 14px; height: 14px; color: var(--holo-amber);"></i>
+            </div>
+            <div class="diag-val" style="color: var(--holo-amber);">72hr</div>
+            <div class="diag-sub">Micro-Fusion Sustained</div>
+          </div>
+
+          <div class="diagnostic-card hud-bracket">
+            <div class="diag-label">
+              <span>Active Installs</span>
+              <i data-lucide="users" style="width: 14px; height: 14px; color: var(--matrix-green);"></i>
+            </div>
+            <div class="diag-val" style="color: var(--matrix-green);">42,000+</div>
+            <div class="diag-sub">Operational Globally</div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="control">
-        <label for="grip">Drag to set grip force</label>
-        <input id="grip" type="range" min="0" max="100" value="0" step="1"
-               aria-describedby="oForce" aria-label="Grip force, percent of maximum">
-        <span class="pct" id="oPct">0%</span>
-      </div>
-    </div>
-  </section>
+    <!-- ==========================================================================
+         INTERACTIVE 3D HOLOGRAM LAB SECTION
+         ========================================================================== -->
+    <section class="section-spacing" id="hologram">
+      <div class="container">
+        <div class="section-hud-header">
+          <div class="hud-badge">
+            <i data-lucide="box" style="width: 14px; height: 14px;"></i>
+            <span>Interactive 3D Visualizer</span>
+          </div>
+          <h2 class="section-title text-glow-cyan">Holographic Chassis Lab</h2>
+          <p class="section-desc">
+            Interact with the real-time 3D cybernetic wireframe matrix. Rotate with mouse drag or isolate anatomical telemetry layers.
+          </p>
+        </div>
 
-  <section class="band">
-    <h2 class="band-head">Three decisions that shaped the design</h2>
-    <div class="rows">
-      <div class="row">
-        <h3>Intent, not twitch</h3>
-        <p>Surface electrodes read muscle contraction, which is a late and noisy signal. The cuff sits against the nerve bundle and picks up the instruction on its way out. You get the grip you meant, not the one your forearm managed.</p>
-      </div>
-      <div class="row">
-        <h3>It learns your hands</h3>
-        <p>The first fortnight is mostly the arm watching you. Grips you use daily move to the front of the pattern queue; ones you never call get retired. A guitarist and a joiner end up with visibly different arms.</p>
-      </div>
-      <div class="row">
-        <h3>It fails quietly</h3>
-        <p>Lose power mid-grip and the hand holds position rather than dropping what it has. A recessed lever under the wrist releases it by hand. No alarm, no flashing, nothing that turns a flat battery into an event in a supermarket queue.</p>
-      </div>
-    </div>
-  </section>
+        <div class="hologram-lab-grid hud-bracket">
+          <!-- 3D Canvas Box -->
+          <div class="holo-canvas-wrapper hud-bracket">
+            <div class="holo-overlay-info">
+              <div>RENDER: MK-VIII QUANTUM PROJECTION</div>
+              <div id="holo-rot-display" style="color: var(--text-dim); margin-top: 0.2rem;">ROTATION: X: 0.0° | Y: 0.0°</div>
+            </div>
+            <canvas id="holo-canvas"></canvas>
+            <div class="holo-controls-bar">
+              <span>[CLICK & DRAG TO ROTATE]</span>
+              <button class="filter-btn" style="padding: 0.2rem 0.6rem; font-size: 0.68rem;" onclick="resetHoloAngle()">Reset Angle</button>
+            </div>
+          </div>
 
-  <section class="band">
-    <h2 class="band-head">Specification</h2>
-    <div class="spec-scroll">
-      <table>
-        <caption>Figures for the standard 382 mm build. Short and long builds vary by mass and battery life.</caption>
-        <tbody>
-          <tr><th scope="row">Mass</th><td>1.06 kg</td></tr>
-          <tr><th scope="row">Grip force</th><td>12 – 140 N</td></tr>
-          <tr><th scope="row">Response, intent to motion</th><td>62 ms</td></tr>
-          <tr><th scope="row">Wrist rotation</th><td>continuous, 120°/s</td></tr>
-          <tr><th scope="row">Grip patterns</th><td>18 stored, 6 mapped to gesture</td></tr>
-          <tr><th scope="row">Battery, typical day</th><td>31 h</td></tr>
-          <tr><th scope="row">Charge to full</th><td>90 min</td></tr>
-          <tr><th scope="row">Ingress rating</th><td>IP67 <em>rain and washing up, not swimming</em></td></tr>
-          <tr><th scope="row">Service interval</th><td>18 months</td></tr>
-          <tr><th scope="row">Warranty</th><td>5 years, parts and labour</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
+          <!-- Telemetry & Layer Inspector -->
+          <div style="display: flex; flex-direction: column; justify-content: space-between;">
+            <div>
+              <span class="hud-badge hud-badge-amber">SCAN TELEMETRY LAYERS</span>
+              <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 0.75rem;">
+                Volumetric Core Analysis
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem; line-height: 1.6;">
+                Switch visualization layers to inspect underlying high-density titanium lattice, neural transmission bus, and energy conduits.
+              </p>
 
-  <section class="band">
-    <h2 class="band-head">How fitting works</h2>
-    <div class="steps">
-      <div class="step">
+              <div class="holo-layer-pills">
+                <button class="holo-layer-pill active" onclick="setHoloLayer(this, 'all')">● Full Matrix</button>
+                <button class="holo-layer-pill" onclick="setHoloLayer(this, 'neural')">⚡ Neural Lattice</button>
+                <button class="holo-layer-pill" onclick="setHoloLayer(this, 'chassis')">🛡️ Titanium Cage</button>
+                <button class="holo-layer-pill" onclick="setHoloLayer(this, 'core')">🔋 Fusion Core</button>
+              </div>
+
+              <div style="background: rgba(0,0,0,0.6); border: 1px solid var(--border-subtle); padding: 1.25rem; margin-top: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">POLYGON DENSITY</span>
+                  <div style="font-family: var(--font-display); font-size: 1.1rem; color: var(--toxic-cyan); font-weight: 700;">84,200 Triangles</div>
+                </div>
+                <div>
+                  <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">FIELD RESOLUTION</span>
+                  <div style="font-family: var(--font-display); font-size: 1.1rem; color: var(--matrix-green); font-weight: 700;">0.002 nm</div>
+                </div>
+                <div>
+                  <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">STRUCTURAL STRESS</span>
+                  <div style="font-family: var(--font-display); font-size: 1.1rem; color: var(--holo-amber); font-weight: 700;">0.04% Max</div>
+                </div>
+                <div>
+                  <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim);">VOLUMETRIC FLUX</span>
+                  <div style="font-family: var(--font-display); font-size: 1.1rem; color: var(--laser-crimson); font-weight: 700;">14.2 Tesla</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+              <button class="hud-btn hud-btn-primary" style="flex: 1;" onclick="triggerScanSound(); showToast('Hologram diagnostic snapshot captured and logged.');">
+                <i data-lucide="camera" style="width: 16px; height: 16px;"></i>
+                Capture Hologram
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         AUGMENTATION CATALOG / MODULAR SYSTEMS
+         ========================================================================== -->
+    <section class="section-spacing" id="catalog">
+      <div class="container">
+        <div class="section-hud-header">
+          <div class="hud-badge">
+            <i data-lucide="layers" style="width: 14px; height: 14px;"></i>
+            <span>Modular Hardware Tier 1</span>
+          </div>
+          <h2 class="section-title text-glow-cyan">Augmentation Modules</h2>
+          <p class="section-desc">
+            Custom modular bio-enhancement kits forged from aerospace titanium, liquid alloy conductors, and military neural decoders.
+          </p>
+        </div>
+
+        <!-- Filter and Search Bar -->
+        <div class="catalog-filter-bar hud-bracket">
+          <div class="filter-pills-wrap">
+            <button class="filter-btn active" onclick="filterCatalog('ALL', this)">ALL MODULES</button>
+            <button class="filter-btn" onclick="filterCatalog('OMEGA', this)">OMEGA</button>
+            <button class="filter-btn" onclick="filterCatalog('TITAN', this)">TITAN</button>
+            <button class="filter-btn" onclick="filterCatalog('RECON', this)">RECON</button>
+            <button class="filter-btn" onclick="filterCatalog('BULWARK', this)">BULWARK</button>
+            <button class="filter-btn" onclick="filterCatalog('VELOCITY', this)">VELOCITY</button>
+            <button class="filter-btn" onclick="filterCatalog('STEALTH', this)">STEALTH</button>
+          </div>
+          <div class="catalog-search-wrap">
+            <i data-lucide="search" style="width: 15px; height: 15px; color: var(--text-dim);"></i>
+            <input type="text" id="catalog-search" class="catalog-search-input" placeholder="Search schematics..." oninput="handleCatalogSearch(this.value)">
+          </div>
+        </div>
+
+        <div class="catalog-grid" id="catalog-grid">
+          <!-- Module 1: Neural Link v4 -->
+          <div class="module-card hud-bracket" data-class="OMEGA" data-name="Neural Link v4" data-key="neural">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box">
+                  <i data-lucide="brain"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // OMEGA</span>
+              </div>
+              <h3 class="module-title">Neural Link v4</h3>
+              <p class="module-desc">
+                Direct cortical telepathic bus delivering multi-gigabit brain-to-chassis communication with zero biological rejection.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>SYNAPTIC SYNC</span>
+                  <span style="color: var(--toxic-cyan);">99.9%</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill" style="width: 99%;"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>POWER DRAIN</span>
+                  <span style="color: var(--holo-amber);">0.35 kW</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--toxic-cyan); font-weight: 700;">₭ 18,500</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Neural Link v4', 'Sub-millimeter micro-wire array woven into the motor cortex, providing seamless real-time HUD telemetry overlay and direct weapon system linkage.', '0.04 ms', '99.9%', '12W Bio-Kinetic')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('neural', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 2: Titan Chassis Arm -->
+          <div class="module-card hud-bracket" data-class="TITAN" data-name="Titan Chassis Arm" data-key="arm">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box crimson">
+                  <i data-lucide="armchair"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // TITAN</span>
+              </div>
+              <h3 class="module-title">Titan Chassis Arm</h3>
+              <p class="module-desc">
+                Reinforced carbon-nanotube exoskeleton skeletal limb equipped with high-pressure fluid actuators and titanium knuckles.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>IMPACT RESISTANCE</span>
+                  <span style="color: var(--laser-crimson);">96.5%</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill crimson" style="width: 96%;"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>TORQUE LIMIT</span>
+                  <span style="color: var(--holo-amber);">850 Nm</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--laser-crimson); font-weight: 700;">₭ 24,000</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Titan Chassis Arm', 'High-tensile hydraulic forearm replacement tested against AP kinetic rounds. Includes modular wrist hardpoints for high-voltage arc cutters.', '850 Nm', '96.5%', '72hr Cell')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('arm', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 3: Cyber-Optic Oculus -->
+          <div class="module-card hud-bracket" data-class="RECON" data-name="Cyber-Optic Oculus" data-key="optics">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box amber">
+                  <i data-lucide="eye"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // RECON</span>
+              </div>
+              <h3 class="module-title">Cyber-Optic Oculus</h3>
+              <p class="module-desc">
+                Multi-spectrum vision package integrating thermal imaging, real-time LIDAR spatial mapping, and 120x focal zoom.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>OPTICAL RESOLUTION</span>
+                  <span style="color: var(--holo-amber);">16K QUANTUM</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill" style="width: 92%; background: var(--holo-amber); box-shadow: 0 0 8px var(--holo-amber);"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>SPECTRAL BANDS</span>
+                  <span style="color: var(--toxic-cyan);">UV / IR / EM</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--holo-amber); font-weight: 700;">₭ 14,200</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Cyber-Optic Oculus', 'Sapphire crystal ocular implant with integrated ballistics trajectory calculator and electromagnetic spectrum decoding HUD.', '0.01 ms', '98.2%', '6W Induction')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('optics', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 4: Sub-Dermal Armor Mesh -->
+          <div class="module-card hud-bracket" data-class="BULWARK" data-name="Sub-Dermal Armor Mesh" data-key="armor">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box crimson">
+                  <i data-lucide="shield-check"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // BULWARK</span>
+              </div>
+              <h3 class="module-title">Sub-Dermal Armor</h3>
+              <p class="module-desc">
+                Flexible shear-thickening non-Newtonian fluid mesh woven beneath dermal tissue to dissipate high-velocity shockwaves.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>BALLISTIC DAMPING</span>
+                  <span style="color: var(--laser-crimson);">94.0%</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill crimson" style="width: 94%;"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>WEIGHT ADDITION</span>
+                  <span style="color: var(--toxic-cyan);">+1.8 kg</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--laser-crimson); font-weight: 700;">₭ 19,800</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Sub-Dermal Armor Mesh', 'Sub-cutaneous lattice hardening instantaneously upon kinetic impact. Reduces blunt trauma by 88% while retaining full skin flexibility.', '5.56mm Stop', '94.0%', 'Passive')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('armor', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 5: Apex Reflex Synapse -->
+          <div class="module-card hud-bracket" data-class="VELOCITY" data-name="Apex Reflex Synapse" data-key="reflex">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box">
+                  <i data-lucide="flame"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // VELOCITY</span>
+              </div>
+              <h3 class="module-title">Apex Reflex Synapse</h3>
+              <p class="module-desc">
+                Adrenal overclocking node that dilates temporal perception during critical combat encounters to 1/10th speed.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>PERCEPTION OVERCLOCK</span>
+                  <span style="color: var(--toxic-cyan);">1000%</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill" style="width: 98%;"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>COOLDOWN CYCLES</span>
+                  <span style="color: var(--laser-crimson);">30 Secs</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--toxic-cyan); font-weight: 700;">₭ 22,000</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Apex Reflex Synapse', 'Biochemical electro-stimulator activating instantaneous fight-or-flight adrenal floods with artificial neural acceleration.', 'x10 Perception', '97.6%', '45W Peak')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('reflex', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Module 6: Phantom Cloaking Core -->
+          <div class="module-card hud-bracket" data-class="STEALTH" data-name="Phantom Cloaking Core" data-key="cloaking">
+            <div>
+              <div class="module-card-top">
+                <div class="module-icon-box amber">
+                  <i data-lucide="ghost"></i>
+                </div>
+                <span class="module-tier-tag">CLASS // STEALTH</span>
+              </div>
+              <h3 class="module-title">Phantom Cloaking</h3>
+              <p class="module-desc">
+                Electro-chromatic photonic redirection matrix bending visual light and thermal signatures around the chassis profile.
+              </p>
+              <div class="module-specs">
+                <div class="spec-row">
+                  <span>OPTICAL CAMOUFLAGE</span>
+                  <span style="color: var(--holo-amber);">97.8%</span>
+                </div>
+                <div class="spec-bar-track">
+                  <div class="spec-bar-fill" style="width: 97%; background: var(--holo-amber);"></div>
+                </div>
+                <div class="spec-row" style="margin-top: 0.5rem;">
+                  <span>DURATION</span>
+                  <span style="color: var(--toxic-cyan);">180 Secs</span>
+                </div>
+              </div>
+            </div>
+            <div class="module-footer">
+              <span style="font-family: var(--font-mono); color: var(--holo-amber); font-weight: 700;">₭ 31,500</span>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="hud-btn hud-btn-secondary" style="padding: 0.5rem 0.85rem;" onclick="openSpecModal('Phantom Cloaking Core', 'Active metamaterial skin bending laser and visible wavelengths with integrated sound-dampening vibrational absorbers.', '0 dB Noise', '97.8%', '1.2 kW Pulse')">
+                  Specs
+                </button>
+                <button class="hud-btn hud-btn-primary" style="padding: 0.5rem 0.85rem;" onclick="toggleFromCatalog('cloaking', this)">
+                  Equip
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         INTERACTIVE BIOMETRIC DIAGNOSTICS & CONFIGURATOR
+         ========================================================================== -->
+    <section class="section-spacing" id="diagnostics" style="background: rgba(4, 7, 12, 0.75);">
+      <div class="container">
+        <div class="section-hud-header">
+          <div class="hud-badge hud-badge-crimson">
+            <i data-lucide="sliders" style="width: 14px; height: 14px;"></i>
+            <span>Interactive Biometric Matrix</span>
+          </div>
+          <h2 class="section-title text-glow-crimson">Chassis Configurator</h2>
+          <p class="section-desc">
+            Toggle all 6 cybernetic implants to recalculate real-time combat capability, thermal output, and synthetic power load.
+          </p>
+        </div>
+
+        <div class="configurator-wrapper hud-bracket">
+          <!-- Interactive Cyborg Wireframe Scan -->
+          <div class="wireframe-container">
+            <div style="position: absolute; top: 1rem; left: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
+              SCAN: SUBJECT // MK-VIII
+            </div>
+            <div style="position: absolute; top: 1rem; right: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--toxic-cyan);">
+              TARGET ACQUIRED
+            </div>
+
+            <!-- SVG Anatomical Silhouette with Hotspots -->
+            <div class="cyborg-svg-wrap">
+              <svg viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Head -->
+                <circle cx="100" cy="45" r="28" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="4 2" fill="rgba(0, 240, 255, 0.04)"/>
+                <circle cx="92" cy="42" r="3" fill="#ff0055"/>
+                <circle cx="108" cy="42" r="3" fill="#ff0055"/>
+                <!-- Spine & Core -->
+                <line x1="100" y1="73" x2="100" y2="230" stroke="#00f0ff" stroke-width="2"/>
+                <circle cx="100" cy="115" r="14" stroke="#ffaa00" stroke-width="1.5" fill="rgba(255, 170, 0, 0.1)"/>
+                <!-- Torso Ribs -->
+                <path d="M70 95 Q100 115 130 95" stroke="#00f0ff" stroke-width="1.2"/>
+                <path d="M65 125 Q100 145 135 125" stroke="#00f0ff" stroke-width="1.2"/>
+                <path d="M70 155 Q100 175 130 155" stroke="#00f0ff" stroke-width="1.2"/>
+                <!-- Arms -->
+                <line x1="65" y1="95" x2="35" y2="170" stroke="#00f0ff" stroke-width="2"/>
+                <line x1="35" y1="170" x2="25" y2="245" stroke="#ff0055" stroke-width="2.5"/>
+                <line x1="135" y1="95" x2="165" y2="170" stroke="#00f0ff" stroke-width="2"/>
+                <line x1="165" y1="170" x2="175" y2="245" stroke="#00f0ff" stroke-width="2"/>
+                <!-- Pelvis -->
+                <polygon points="75,210 125,210 100,245" stroke="#00f0ff" stroke-width="1.5" fill="rgba(0, 240, 255, 0.05)"/>
+                <!-- Legs -->
+                <line x1="85" y1="245" x2="75" y2="330" stroke="#00f0ff" stroke-width="2"/>
+                <line x1="75" y1="330" x2="70" y2="395" stroke="#00f0ff" stroke-width="2"/>
+                <line x1="115" y1="245" x2="125" y2="330" stroke="#00f0ff" stroke-width="2"/>
+                <line x1="125" y1="330" x2="130" y2="395" stroke="#00f0ff" stroke-width="2"/>
+              </svg>
+
+              <!-- Dynamic Hotspots for All 6 Modules -->
+              <div class="hotspot" id="hs-neural" style="top: 11%; left: 50%;" title="Neural Link v4"></div>
+              <div class="hotspot crimson" id="hs-arm" style="top: 55%; left: 14%;" title="Titan Chassis Arm"></div>
+              <div class="hotspot amber" id="hs-optics" style="top: 10%; left: 54%;" title="Cyber-Optic Oculus"></div>
+              <div class="hotspot crimson" id="hs-armor" style="top: 36%; left: 50%;" title="Sub-Dermal Armor Mesh"></div>
+              <div class="hotspot" id="hs-reflex" style="top: 25%; left: 45%;" title="Apex Reflex Synapse"></div>
+              <div class="hotspot amber" id="hs-cloaking" style="top: 48%; left: 50%;" title="Phantom Cloaking Core"></div>
+            </div>
+
+            <div style="margin-top: 1.5rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--matrix-green); text-align: center;">
+              ● TELEMETRY: HARMONIZED // 0 REJECTION VECTORS
+            </div>
+          </div>
+
+          <!-- Configuration Controls & Live Calculators -->
+          <div class="config-controls">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <span class="hud-badge">CONFIGURATION DEPLOYMENT</span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">PRESETS:</span>
+              </div>
+
+              <!-- Quick Presets -->
+              <div class="preset-chips-wrap">
+                <button class="preset-chip" onclick="applyPreset('assault')">⚔️ Assault Build</button>
+                <button class="preset-chip" onclick="applyPreset('stealth')">👤 Ghost Stealth</button>
+                <button class="preset-chip" onclick="applyPreset('overclock')">⚡ 100% Max Overclock</button>
+                <button class="preset-chip" onclick="applyPreset('minimal')">🔄 Reset Core</button>
+              </div>
+
+              <div class="toggle-group">
+                <!-- Toggle 1: Neural Link -->
+                <div class="config-toggle-item active" id="cfg-item-neural" onclick="toggleConfig('neural')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Neural Link v4</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+22% Combat // 0.35 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+
+                <!-- Toggle 2: Titan Arm -->
+                <div class="config-toggle-item active" id="cfg-item-arm" onclick="toggleConfig('arm')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Titan Chassis Arm</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+34% Torque // 0.75 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+
+                <!-- Toggle 3: Cyber Optics -->
+                <div class="config-toggle-item active" id="cfg-item-optics" onclick="toggleConfig('optics')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Cyber Optics</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+18% Target // 0.20 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+
+                <!-- Toggle 4: Sub-Dermal Armor -->
+                <div class="config-toggle-item" id="cfg-item-armor" onclick="toggleConfig('armor')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Sub-Dermal Armor</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+26% Kinetic // 0.15 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+
+                <!-- Toggle 5: Apex Reflex -->
+                <div class="config-toggle-item" id="cfg-item-reflex" onclick="toggleConfig('reflex')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Apex Reflex</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+28% Reflex // 0.45 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+
+                <!-- Toggle 6: Phantom Cloaking -->
+                <div class="config-toggle-item" id="cfg-item-cloaking" onclick="toggleConfig('cloaking')">
+                  <div>
+                    <div style="font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 0.85rem;">Phantom Cloak</div>
+                    <div style="font-size: 0.7rem; color: var(--text-dim); font-family: var(--font-mono);">+30% Stealth // 1.20 kW</div>
+                  </div>
+                  <div class="custom-switch"><div class="switch-knob"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dynamic Results HUD -->
+            <div>
+              <div class="config-results-hud hud-bracket">
+                <div class="res-metric">
+                  <label>Combat Rating</label>
+                  <span id="calc-rating" style="color: var(--laser-crimson);">74%</span>
+                </div>
+                <div class="res-metric">
+                  <label>Power Load</label>
+                  <span id="calc-power" style="color: var(--toxic-cyan);">1.30 kW</span>
+                </div>
+                <div class="res-metric">
+                  <label>Unit Cost</label>
+                  <span id="calc-cost" style="color: var(--holo-amber);">₭ 56,700</span>
+                </div>
+              </div>
+
+              <button class="hud-btn hud-btn-primary" style="width: 100%;" onclick="openRequisitionDossier()">
+                <i data-lucide="shield-check" style="width: 16px; height: 16px;"></i>
+                Proceed to Surgical Requisition
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         BENCHMARK & OVERCLOCK LAB (Interactive Stress Test)
+         ========================================================================== -->
+    <section class="section-spacing" id="benchmark">
+      <div class="container">
+        <div class="section-hud-header">
+          <div class="hud-badge hud-badge-amber">
+            <i data-lucide="zap" style="width: 14px; height: 14px;"></i>
+            <span>Telemetry Stress Benchmark</span>
+          </div>
+          <h2 class="section-title text-glow-amber">Overclocking Lab</h2>
+          <p class="section-desc">
+            Simulate maximum synaptic bandwidth throughput, thermal load under sustained EMP burst, and micro-fusion discharge.
+          </p>
+        </div>
+
+        <div class="benchmark-lab-box hud-bracket">
+          <div class="bench-grid">
+            <!-- Left: Waveform Oscilloscope & Gauges -->
+            <div>
+              <div class="oscilloscope-box hud-bracket">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); margin-bottom: 0.5rem;">
+                  <span>NEURAL SYNAPSE WAVEFORM FREQUENCY (4.8 GHz)</span>
+                  <span id="bench-status-tag" style="color: var(--matrix-green);">STATUS: STABLE</span>
+                </div>
+                <canvas id="oscilloscope-canvas"></canvas>
+              </div>
+
+              <div class="bench-gauges-grid">
+                <div class="gauge-item">
+                  <div class="gauge-head">
+                    <span>SYNAPSE HZ</span>
+                    <span id="gauge-hz-val" style="color: var(--toxic-cyan);">4.82 GHz</span>
+                  </div>
+                  <div class="gauge-meter-track">
+                    <div class="gauge-meter-fill" id="gauge-hz-fill" style="width: 68%;"></div>
+                  </div>
+                </div>
+
+                <div class="gauge-item">
+                  <div class="gauge-head">
+                    <span>CORE TEMP</span>
+                    <span id="gauge-temp-val" style="color: var(--matrix-green);">34.2 °C</span>
+                  </div>
+                  <div class="gauge-meter-track">
+                    <div class="gauge-meter-fill" id="gauge-temp-fill" style="width: 35%; background: var(--matrix-green);"></div>
+                  </div>
+                </div>
+
+                <div class="gauge-item">
+                  <div class="gauge-head">
+                    <span>KINETIC FORCE</span>
+                    <span id="gauge-force-val" style="color: var(--laser-crimson);">850 Nm</span>
+                  </div>
+                  <div class="gauge-meter-track">
+                    <div class="gauge-meter-fill" id="gauge-force-fill" style="width: 78%; background: var(--laser-crimson);"></div>
+                  </div>
+                </div>
+
+                <div class="gauge-item">
+                  <div class="gauge-head">
+                    <span>EMP SHIELD</span>
+                    <span id="gauge-shield-val" style="color: var(--holo-amber);">99.4%</span>
+                  </div>
+                  <div class="gauge-meter-track">
+                    <div class="gauge-meter-fill" id="gauge-shield-fill" style="width: 99%; background: var(--holo-amber);"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Real-time Telemetry Stream & Action Controls -->
+            <div class="bench-telemetry-feed hud-bracket">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.75rem; margin-bottom: 0.75rem;">
+                  <span style="color: var(--text-bright); font-weight: 700;">TELEMETRY CONSOLE</span>
+                  <span class="pulse-dot"></span>
+                </div>
+
+                <div class="feed-logs" id="telemetry-logs">
+                  <div class="log-line green">[00:00:01] KRONOS Biometric Core initialized.</div>
+                  <div class="log-line cyan">[00:00:02] Neural link bus harmonized @ 0.04ms latency.</div>
+                  <div class="log-line">[00:00:03] Fluid hydraulic lines pressurized to 3,200 PSI.</div>
+                  <div class="log-line green">[00:00:04] All 6 bio-inert implant vectors verified nominal.</div>
+                </div>
+              </div>
+
+              <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                <button class="hud-btn hud-btn-primary" id="overclock-btn" onclick="runOverclockSimulation()">
+                  <i data-lucide="flame" style="width: 16px; height: 16px;"></i>
+                  Initiate 10-Second Overclock
+                </button>
+                <button class="hud-btn hud-btn-secondary hud-btn-sm" onclick="triggerEmpShieldPulse()">
+                  <i data-lucide="shield-alert" style="width: 14px; height: 14px;"></i>
+                  Test EMP Kinetic Shield
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         DECLASSIFIED FAQ TERMINAL & INTERACTIVE CLI ACCORDION
+         ========================================================================== -->
+    <section class="section-spacing" id="faq">
+      <div class="container">
+        <div class="section-hud-header">
+          <div class="hud-badge">
+            <i data-lucide="terminal" style="width: 14px; height: 14px;"></i>
+            <span>Classified Telemetry</span>
+          </div>
+          <h2 class="section-title text-glow-cyan">Declassified FAQ Log</h2>
+          <p class="section-desc">
+            Technical guidelines regarding biological integration, reject prevention protocols, and firmware updates.
+          </p>
+        </div>
+
+        <div class="faq-terminal-box hud-bracket">
+          <div class="terminal-header-bar">
+            <div class="terminal-dots">
+              <span class="tdot tdot-red"></span>
+              <span class="tdot tdot-yellow"></span>
+              <span class="tdot tdot-green"></span>
+            </div>
+            <span>SYS_LOG://KRONOS_AUG_CLEARANCE_v4.8</span>
+            <span>SEC_LEVEL: TOP_SECRET</span>
+          </div>
+
+          <div class="faq-list">
+            <!-- FAQ 1 -->
+            <div class="faq-terminal-item open">
+              <button class="faq-trigger" onclick="toggleFaqTerminal(this)">
+                <span>[LOG_01] What is the biological rejection rate for KRONOS neural links?</span>
+                <i data-lucide="chevron-down"></i>
+              </button>
+              <div class="faq-content">
+                Project KRONOS utilizes proprietary bio-inert titanium nitride coatings and synthetic neuro-peptides that prevent immune glial scarring. Across over 42,000 active global augmentations, the clinical rejection rate remains under 0.02%.
+              </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="faq-terminal-item">
+              <button class="faq-trigger" onclick="toggleFaqTerminal(this)">
+                <span>[LOG_02] How does the 72-hour micro-fusion cell recharge?</span>
+                <i data-lucide="chevron-down"></i>
+              </button>
+              <div class="faq-content">
+                Our chassis embeds dual-mode kinetic harvesters that convert normal limb movement and vascular thermal gradients into electrical charge, with rapid sub-dermal induction charging coils supporting full 0-100% replenishments in 18 minutes.
+              </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="faq-terminal-item">
+              <button class="faq-trigger" onclick="toggleFaqTerminal(this)">
+                <span>[LOG_03] Are firmware and combat algorithms updateable wirelessly?</span>
+                <i data-lucide="chevron-down"></i>
+              </button>
+              <div class="faq-content">
+                Yes. Security-cleared firmware is pushed through quantum-encrypted satellite bursts. All critical motor overrides feature an immutable hardware mechanical air-gap to guarantee host autonomy.
+              </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="faq-terminal-item">
+              <button class="faq-trigger" onclick="toggleFaqTerminal(this)">
+                <span>[LOG_04] What warranty and combat repair coverages are included?</span>
+                <i data-lucide="chevron-down"></i>
+              </button>
+              <div class="faq-content">
+                Every synthetic module carries a 10-year unlimited kinetic structural warranty. Emergency field repair drones and replacement chassis hubs are operational in 120+ metropolitan centers worldwide.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Terminal CLI Emulator -->
+        <div class="terminal-cli-wrap hud-bracket">
+          <div style="display: flex; justify-content: space-between; color: var(--text-dim); font-size: 0.72rem; margin-bottom: 0.5rem;">
+            <span>KRONOS LIVE INTERACTIVE SHELL // v4.8.2</span>
+            <span>TYPE 'help' FOR COMMAND LIST</span>
+          </div>
+          <div class="cli-history" id="cli-history">
+            <div><span style="color: var(--matrix-green);">SYSTEM READY.</span> Try typing commands or click quick actions below.</div>
+          </div>
+          <form class="cli-form" onsubmit="handleCliCommand(event)">
+            <span class="cli-prompt">operator@kronos:~$</span>
+            <input type="text" id="cli-input" class="cli-input" placeholder="Type 'scan', 'overclock', 'modules', 'status'..." autocomplete="off">
+          </form>
+          <div class="cli-chips">
+            <button class="cli-chip" onclick="runCliQuick('help')">help</button>
+            <button class="cli-chip" onclick="runCliQuick('status')">status</button>
+            <button class="cli-chip" onclick="runCliQuick('scan')">scan</button>
+            <button class="cli-chip" onclick="runCliQuick('modules')">modules</button>
+            <button class="cli-chip" onclick="runCliQuick('overclock')">overclock</button>
+            <button class="cli-chip" onclick="runCliQuick('dossier')">dossier</button>
+            <button class="cli-chip" onclick="runCliQuick('clear')">clear</button>
+          </div>
+        </div>
+
+        <!-- FINAL DEPLOYMENT CTA -->
+        <div class="final-cta-section">
+          <div class="final-cta-card caution-stripe">
+            <div class="hud-badge hud-badge-crimson" style="margin-bottom: 1rem;">
+              HAZARD PROTOCOL // AUTHORIZED PERSONNEL ONLY
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 900; color: #fff; text-transform: uppercase;">
+              Initiate Synthetic Evolution
+            </h2>
+            <p style="color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin: 1rem auto 0 auto; font-family: var(--font-hud);">
+              Submit your operator credentials for biometric pre-qualification and priority scheduling at an accredited KRONOS surgical facility.
+            </p>
+
+            <form class="deployment-input-group" onsubmit="handleDeployment(event)">
+              <input type="email" id="deploy-email" class="terminal-input" placeholder="OPERATOR_TAG@SECURE_NET.COM" required>
+              <button type="submit" class="hud-btn hud-btn-primary">
+                <i data-lucide="terminal" style="width: 16px; height: 16px;"></i>
+                Deploy Unit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       FUTURISTIC TECHNICAL FOOTER
+       ========================================================================== -->
+  <footer class="hud-footer">
+    <div class="container">
+      <div class="crypto-hash-bar hud-bracket">
+        <span>SECURITY PROTOCOL: SHA3-512</span>
+        <span id="footer-root-hash">ROOT_HASH: 0x7F9A2B4C981E0FD4C118B31D</span>
+        <span id="footer-ping-info">PING: 12ms (ORBITAL RELAY)</span>
+      </div>
+
+      <div class="footer-grid">
+        <!-- Brand & Vision -->
         <div>
-          <h3>Consultation</h3>
-          <p>A clinician checks residual limb length, skin condition and what you actually need the arm to do. Some people leave here with a different recommendation, and that is a fine outcome.</p>
-          <p class="step-dur">One appointment</p>
+          <div class="hud-brand" style="margin-bottom: 1rem;">
+            <div class="hud-brand-emblem">
+              <i data-lucide="shield-alert" style="width: 22px; height: 22px;"></i>
+            </div>
+            <div>
+              <div class="hud-brand-title">KRONOS<span style="color: var(--laser-crimson);">//</span>BIO</div>
+              <div class="hud-brand-status">FIRMWARE v4.8.2</div>
+            </div>
+          </div>
+          <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; max-width: 300px;">
+            Pioneering the boundary between human consciousness and synthetic biomechanics. Engineered for zero failure.
+          </p>
         </div>
-      </div>
-      <div class="step">
-        <div>
-          <h3>Socket cast</h3>
-          <p>A silicone impression and a pressure map. The socket is the part that decides whether you wear the arm all day or take it off at two in the afternoon, so it gets the most attention.</p>
-          <p class="step-dur">Two weeks to first fit</p>
-        </div>
-      </div>
-      <div class="step">
-        <div>
-          <h3>Nerve mapping</h3>
-          <p>You imagine movements while the cuff records. It takes about an hour and feels like nothing at all. The map it produces is yours and does not transfer between arms.</p>
-          <p class="step-dur">90 minutes</p>
-        </div>
-      </div>
-      <div class="step">
-        <div>
-          <h3>Fitting</h3>
-          <p>Socket adjusted on site, wrist alignment set to your shoulder, grips loaded. You go home with it the same day.</p>
-          <p class="step-dur">Half a day</p>
-        </div>
-      </div>
-      <div class="step">
-        <div>
-          <h3>Calibration and training</h3>
-          <p>Six sessions over three months, then annually. Most of it is unlearning the compensations you built up before the arm arrived.</p>
-          <p class="step-dur">Three months, tapering</p>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <section class="band">
-    <h2 class="band-head">From people wearing one</h2>
-    <div class="owners">
-      <figure>
-        <blockquote>I stopped noticing it around week six. That is the entire review.</blockquote>
-        <figcaption class="who"><b>Priya Raval</b> — climbing instructor, 14 months</figcaption>
-      </figure>
-      <figure>
-        <blockquote>It holds an egg and it holds a 20 kg bar. I use the egg setting far more often.</blockquote>
-        <figcaption class="who"><b>Tomas Lindqvist</b> — pastry chef, 8 months</figcaption>
-      </figure>
-    </div>
-  </section>
+        <!-- System Links -->
+        <div>
+          <h4 class="footer-heading">Architecture</h4>
+          <ul class="footer-list">
+            <li><a href="#hero" class="footer-link-item">Neural Telemetry</a></li>
+            <li><a href="#hologram" class="footer-link-item">3D Holo-Lab</a></li>
+            <li><a href="#catalog" class="footer-link-item">Titan Actuators</a></li>
+            <li><a href="#diagnostics" class="footer-link-item">Sub-Dermal Plating</a></li>
+            <li><a href="#benchmark" class="footer-link-item">Overclock Benchmark</a></li>
+          </ul>
+        </div>
 
-  <section class="cta">
-    <div>
-      <h2>Book a fitting</h2>
-      <p>Assessment clinics in Manchester, Rotterdam and Pune. Bring previous imaging if you have it. The first consultation costs nothing and carries no obligation.</p>
-    </div>
-    <a class="btn" href="#book">Book a fitting</a>
-  </section>
+        <!-- Compliance & Legal -->
+        <div>
+          <h4 class="footer-heading">Clearance</h4>
+          <ul class="footer-list">
+            <li><a href="javascript:void(0)" onclick="showToast('Bio-Ethics Treaty certified under MIL-STD-882E.')" class="footer-link-item">Bio-Ethics Treaty</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Mil-Spec Compliance verified.')" class="footer-link-item">Mil-Spec Compliance</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Hardware Airgap integrity 100%.')" class="footer-link-item">Hardware Airgap</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Gene-Lock cryptographically signed.')" class="footer-link-item">Gene-Lock Registry</a></li>
+          </ul>
+        </div>
 
-  <footer>
-    <div class="foot-grid">
-      <span class="num">Lathe Medical Ltd</span>
-      <span class="num">Device class II · CE 0483</span>
-      <span class="num">fitting@lathe.example</span>
+        <!-- Telemetry Feeds -->
+        <div>
+          <h4 class="footer-heading">Telemetry Network</h4>
+          <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+            <a href="javascript:void(0)" onclick="showToast('Connected to Terminal Shell.')" class="hud-brand-emblem" style="width: 38px; height: 38px;" aria-label="Terminal"><i data-lucide="terminal" style="width: 18px; height: 18px;"></i></a>
+            <a href="javascript:void(0)" onclick="showToast('Repository synchronizing...')" class="hud-brand-emblem" style="width: 38px; height: 38px;" aria-label="Github"><i data-lucide="github" style="width: 18px; height: 18px;"></i></a>
+            <a href="javascript:void(0)" onclick="showToast('Radio telemetry broadcast active.')" class="hud-brand-emblem" style="width: 38px; height: 38px;" aria-label="Radio"><i data-lucide="radio" style="width: 18px; height: 18px;"></i></a>
+            <a href="javascript:void(0)" onclick="showToast('Quantum CPU core nominal.')" class="hud-brand-emblem" style="width: 38px; height: 38px;" aria-label="Cpu"><i data-lucide="cpu" style="width: 18px; height: 18px;"></i></a>
+          </div>
+          <div style="margin-top: 1.25rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--matrix-green);">
+            ● ALL 12 NODES SYNCHRONIZED
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <div>© 2026 PROJECT KRONOS INDUSTRIAL CYBERNETICS CORP. ALL RIGHTS RESERVED.</div>
+        <div>AUTHORIZED UNDER MILITARY CYBERNETIC STATUTE 77-B</div>
+      </div>
     </div>
-    <p class="disclaim">Meridian VII and Lathe Medical are invented for this design concept. Nothing here is a real product or clinical advice.</p>
   </footer>
-</div>
 
-<script>
-(function(){
-  var FING = [
-    {kx:716, ky:216, L:[54,38,26], o:.34},
-    {kx:722, ky:232, L:[64,46,30], o:.48},
-    {kx:722, ky:254, L:[66,48,32], o:.68},
-    {kx:716, ky:276, L:[62,44,30], o:1}
-  ];
-  var MAX = [72, 78, 50];
+  <!-- ==========================================================================
+       SPEC INSPECTION MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="spec-modal" onclick="closeModalOnBackdrop(event, 'spec-modal')">
+    <div class="modal-hud-card">
+      <button class="modal-close-trigger" onclick="closeModal('spec-modal')" aria-label="Close modal">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
 
-  var SVGNS = "http://www.w3.org/2000/svg";
-  function el(n, attrs){ var e = document.createElementNS(SVGNS, n); for(var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+      <span class="hud-badge" id="modal-spec-tag">SCHEMATIC BRIEF</span>
+      <h3 id="modal-spec-title" style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: #fff; margin-top: 0.75rem;">
+        Module Title
+      </h3>
+      <p id="modal-spec-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-top: 0.75rem;">
+        Description
+      </p>
 
-  function buildChain(kx, ky, L, widths){
-    var g1 = el("g", {}), g2 = el("g", {}), g3 = el("g", {});
-    var p1 = kx + L[0], p2 = p1 + L[1];
-    g1.appendChild(el("rect",{x:kx, y:ky-widths[0]/2, width:L[0], height:widths[0], rx:widths[0]/2}));
-    g2.appendChild(el("rect",{x:p1, y:ky-widths[1]/2, width:L[1], height:widths[1], rx:widths[1]/2}));
-    g3.appendChild(el("rect",{x:p2, y:ky-widths[2]/2, width:L[2], height:widths[2], rx:widths[2]/2}));
-    g2.appendChild(g3); g1.appendChild(g2);
-    return {root:g1, g1:g1, g2:g2, g3:g3, kx:kx, ky:ky, p1:p1, p2:p2};
-  }
+      <div style="background: rgba(0, 0, 0, 0.6); border: 1px solid var(--border-subtle); border-left: 3px solid var(--toxic-cyan); padding: 1.25rem; margin: 1.75rem 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Peak Output</span>
+          <div id="modal-spec-metric1" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--toxic-cyan); margin-top: 0.2rem;">
+            --
+          </div>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Sync Efficiency</span>
+          <div id="modal-spec-metric2" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--matrix-green); margin-top: 0.2rem;">
+            --
+          </div>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Power Cell Load</span>
+          <div id="modal-spec-metric3" style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--holo-amber); margin-top: 0.2rem;">
+            --
+          </div>
+        </div>
+        <div>
+          <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase;">Host Rejection Risk</span>
+          <div style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--laser-crimson); margin-top: 0.2rem;">
+            &lt; 0.01%
+          </div>
+        </div>
+      </div>
 
-  var fingersG = document.getElementById("fingers");
-  var chains = FING.map(function(f){
-    var c = buildChain(f.kx, f.ky, f.L, [28,24,20]);
-    c.root.setAttribute("opacity", f.o);
-    fingersG.appendChild(c.root);
-    return c;
-  });
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <button class="hud-btn hud-btn-primary" style="flex: 1;" onclick="closeModal('spec-modal'); openRequisitionDossier();">
+          Requisition Module
+        </button>
+        <button class="hud-btn hud-btn-secondary" onclick="showToast('Blueprint PDF decrypted to local operator console.')">
+          Decipher Blueprint
+        </button>
+      </div>
+    </div>
+  </div>
 
-  var thumbG = document.getElementById("thumb");
-  var thumb = buildChain(692, 306, [56,42,0], [30,25,1]);
-  thumb.g3.setAttribute("opacity", 0);
-  thumbG.appendChild(thumb.root);
+  <!-- ==========================================================================
+       REQUISITION & SURGICAL DOSSIER CHECKOUT MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="dossier-modal" onclick="closeModalOnBackdrop(event, 'dossier-modal')">
+    <div class="modal-hud-card">
+      <button class="modal-close-trigger" onclick="closeModal('dossier-modal')" aria-label="Close modal">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
 
-  function rot(g, a, cx, cy){ g.setAttribute("transform", "rotate(" + a.toFixed(2) + " " + cx + " " + cy + ")"); }
+      <span class="hud-badge hud-badge-crimson">CLASSIFIED SURGICAL REQUISITION</span>
+      <h3 style="font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: #fff; margin-top: 0.75rem;">
+        Operator Bio-Chassis Authorization
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-top: 0.35rem;">
+        Review your configured cybernetic implant package and authorize surgical neural mapping.
+      </p>
 
-  var oForce = document.getElementById("oForce"),
-      oPts   = document.getElementById("oPts"),
-      oLat   = document.getElementById("oLat"),
-      oPwr   = document.getElementById("oPwr"),
-      oBar   = document.getElementById("oBar"),
-      oPct   = document.getElementById("oPct"),
-      stateName = document.getElementById("stateName"),
-      slider = document.getElementById("grip");
+      <!-- Order Summary Breakdown -->
+      <div style="background: rgba(0, 0, 0, 0.7); border: 1px solid var(--border-subtle); padding: 1rem; margin: 1.25rem 0; font-family: var(--font-mono); font-size: 0.78rem;">
+        <div style="display: flex; justify-content: space-between; color: var(--text-dim); border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.4rem; margin-bottom: 0.5rem;">
+          <span>MODULE CONFIGURATION</span>
+          <span>EST. COST</span>
+        </div>
+        <div id="dossier-items-list" style="display: flex; flex-direction: column; gap: 0.4rem; color: var(--text-main);">
+          <!-- Populated by JS -->
+        </div>
+        <div style="display: flex; justify-content: space-between; font-weight: 700; color: var(--toxic-cyan); border-top: 1px solid var(--border-subtle); padding-top: 0.5rem; margin-top: 0.6rem; font-size: 0.95rem;">
+          <span>TOTAL CREDITS:</span>
+          <span id="dossier-total-cost" style="color: var(--holo-amber);">₭ 0</span>
+        </div>
+      </div>
 
-  function label(t){
-    if(t < 0.12) return "Open";
-    if(t < 0.40) return "Pinch";
-    if(t < 0.72) return "Cylindrical";
-    return "Power grip";
-  }
+      <!-- Digital Signature Pad -->
+      <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); display: flex; justify-content: space-between;">
+        <span>OPERATOR BIOMETRIC SIGNATURE (DRAW BELOW)</span>
+        <button onclick="clearSignature()" style="background: transparent; border: none; color: var(--laser-crimson); cursor: pointer; font-size: 0.7rem;">[CLEAR PAD]</button>
+      </div>
+      <div class="signature-pad-wrap">
+        <canvas id="signature-canvas"></canvas>
+      </div>
 
-  function render(v){
-    var t = v / 100;
-    chains.forEach(function(c, i){
-      var k = 1 - i * 0.05;
-      rot(c.g1, MAX[0] * t * k, c.kx, c.ky);
-      rot(c.g2, MAX[1] * t * k, c.p1, c.ky);
-      rot(c.g3, MAX[2] * t * k, c.p2, c.ky);
-    });
-    rot(thumb.g1, -14 - 46 * t, thumb.kx, thumb.ky);
-    rot(thumb.g2, -8 - 34 * t, thumb.p1, thumb.ky);
+      <div style="display: flex; gap: 1rem;">
+        <button class="hud-btn hud-btn-primary" style="flex: 1;" onclick="confirmSurgicalRequisition()">
+          <i data-lucide="check-circle" style="width: 16px; height: 16px;"></i>
+          Authorize Requisition
+        </button>
+      </div>
+    </div>
+  </div>
 
-    oForce.innerHTML = Math.round(12 + 128 * t) + "<span>N</span>";
-    oPts.textContent = Math.round(2 + 9 * t);
-    oLat.innerHTML = (62 - 4 * t).toFixed(0) + "<span>ms</span>";
-    oPwr.innerHTML = (1.2 + 6.4 * t).toFixed(1) + "<span>W</span>";
-    oBar.style.width = (t * 100) + "%";
-    oPct.textContent = Math.round(v) + "%";
-    stateName.textContent = label(t);
-  }
+  <!-- ==========================================================================
+       KEYBOARD SHORTCUTS MODAL
+       ========================================================================== -->
+  <div class="modal-backdrop" id="shortcuts-modal" onclick="closeModalOnBackdrop(event, 'shortcuts-modal')">
+    <div class="modal-hud-card" style="max-width: 480px;">
+      <button class="modal-close-trigger" onclick="closeModal('shortcuts-modal')" aria-label="Close modal">
+        <i data-lucide="x" style="width: 20px; height: 20px;"></i>
+      </button>
 
-  slider.addEventListener("input", function(){ render(+slider.value); });
-  render(0);
+      <span class="hud-badge">HUD SHORTCUT REGISTRY</span>
+      <h3 style="font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; color: #fff; margin: 0.75rem 0 1rem 0;">
+        Operator Keybindings
+      </h3>
 
-  // One orchestrated moment on load: a calibration sweep to resting grip.
-  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var TARGET = 34;
-  if(reduce){
-    slider.value = TARGET; render(TARGET);
-  } else {
-    var start = null, DUR = 1100;
-    function ease(x){ return 1 - Math.pow(1 - x, 3); }
-    function step(ts){
-      if(start === null) start = ts;
-      var p = Math.min((ts - start) / DUR, 1);
-      var v = TARGET * ease(p);
-      slider.value = v; render(v);
-      if(p < 1) requestAnimationFrame(step);
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; font-family: var(--font-mono); font-size: 0.85rem;">
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+          <span style="color: var(--text-muted);">Toggle Audio Synth</span>
+          <kbd style="color: var(--toxic-cyan); font-weight: 700;">[ M ]</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+          <span style="color: var(--text-muted);">Run Biometric Scan</span>
+          <kbd style="color: var(--laser-crimson); font-weight: 700;">[ S ]</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+          <span style="color: var(--text-muted);">Jump to Configurator</span>
+          <kbd style="color: var(--holo-amber); font-weight: 700;">[ C ]</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+          <span style="color: var(--text-muted);">Jump to Overclock Lab</span>
+          <kbd style="color: var(--matrix-green); font-weight: 700;">[ B ]</kbd>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle);">
+          <span style="color: var(--text-muted);">Close Any Active Modal</span>
+          <kbd style="color: var(--text-bright); font-weight: 700;">[ ESC ]</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT ENGINE, AUDIO SYNTHESIS & ANIMATIONS
+       ========================================================================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    /* ==========================================================================
+       1. WEB AUDIO SYNTHESIZER (Procedural Cyberpunk Sound FX)
+       ========================================================================== */
+    let audioEnabled = true;
+    const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
+
+    function playSyntheticTone(freq, type, duration, vol = 0.04) {
+      if (!audioEnabled || !audioCtx) return;
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch(e) {}
     }
-    setTimeout(function(){ requestAnimationFrame(step); }, 420);
-  }
-})();
-</script>
+
+    function triggerScanSound() {
+      playSyntheticTone(880, 'sawtooth', 0.15, 0.05);
+      setTimeout(() => playSyntheticTone(1760, 'sine', 0.25, 0.05), 80);
+    }
+
+    function triggerOverclockSound() {
+      if (!audioEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.8);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.9);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.9);
+      } catch(e) {}
+    }
+
+    function toggleAudioEngine() {
+      audioEnabled = !audioEnabled;
+      const btn = document.getElementById('sound-btn');
+      const text = document.getElementById('sound-text');
+      if (audioEnabled) {
+        btn.classList.add('sound-on');
+        text.innerText = 'AUDIO ON';
+        playSyntheticTone(1200, 'sine', 0.15);
+        showToast('Cybernetic Audio Synthesizer: ACTIVE');
+      } else {
+        btn.classList.remove('sound-on');
+        text.innerText = 'MUTED';
+        showToast('Cybernetic Audio Synthesizer: MUTED');
+      }
+    }
+
+    /* ==========================================================================
+       2. INTERACTIVE BIOMETRIC PARTICLES CANVAS
+       ========================================================================== */
+    (function initBiometricCanvas() {
+      const canvas = document.getElementById('biometric-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let width, height;
+      let nodes = [];
+      const nodeCount = 50;
+      const mouse = { x: null, y: null, radius: 170 };
+
+      function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      window.addEventListener('mousemove', (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        mouse.x = null;
+        mouse.y = null;
+      });
+
+      class BioNode {
+        constructor() {
+          this.x = Math.random() * width;
+          this.y = Math.random() * height;
+          this.vx = (Math.random() - 0.5) * 0.7;
+          this.vy = (Math.random() - 0.5) * 0.7;
+          this.size = Math.random() * 2.5 + 1;
+          this.isCrimson = Math.random() > 0.75;
+        }
+
+        update() {
+          this.x += this.vx;
+          this.y += this.vy;
+          if (this.x < 0 || this.x > width) this.vx *= -1;
+          if (this.y < 0 || this.y > height) this.vy *= -1;
+
+          if (mouse.x !== null && mouse.y !== null) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < mouse.radius) {
+              const force = (1 - dist / mouse.radius) * 0.03;
+              this.vx += dx * force;
+              this.vy += dy * force;
+            }
+          }
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.isCrimson ? 'rgba(255, 0, 85, 0.7)' : 'rgba(0, 240, 255, 0.7)';
+          ctx.shadowColor = this.isCrimson ? '#ff0055' : '#00f0ff';
+          ctx.shadowBlur = 8;
+          ctx.fill();
+        }
+      }
+
+      for (let i = 0; i < nodeCount; i++) nodes.push(new BioNode());
+
+      function render() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const dx = nodes[i].x - nodes[j].x;
+            const dy = nodes[i].y - nodes[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist < 130) {
+              const alpha = (1 - dist / 130) * 0.25;
+              ctx.beginPath();
+              ctx.moveTo(nodes[i].x, nodes[i].y);
+              ctx.lineTo(nodes[j].x, nodes[j].y);
+              ctx.strokeStyle = nodes[i].isCrimson ? `rgba(255, 0, 85, ${alpha})` : `rgba(0, 240, 255, ${alpha})`;
+              ctx.lineWidth = 1;
+              ctx.stroke();
+            }
+          }
+        }
+
+        nodes.forEach(n => {
+          n.update();
+          n.draw();
+        });
+
+        requestAnimationFrame(render);
+      }
+      render();
+    })();
+
+    /* ==========================================================================
+       3. 3D WIREFRAME HOLOGRAM LAB CANVAS
+       ========================================================================== */
+    let holoRotX = 0.2, holoRotY = 0.4;
+    let isDraggingHolo = false;
+    let prevMouseX = 0, prevMouseY = 0;
+    let currentHoloLayer = 'all';
+
+    (function initHoloLab() {
+      const canvas = document.getElementById('holo-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = canvas.parentElement.clientWidth || 400;
+      let h = canvas.height = 380;
+
+      window.addEventListener('resize', () => {
+        if (canvas.parentElement) {
+          w = canvas.width = canvas.parentElement.clientWidth;
+          h = canvas.height = 380;
+        }
+      });
+
+      // Generate 3D cyber chassis nodes
+      const points = [];
+      const edges = [];
+
+      // Torso Cube
+      const s = 70;
+      const v = [
+        [-s, -s*1.2, -s], [s, -s*1.2, -s], [s, s*1.2, -s], [-s, s*1.2, -s],
+        [-s, -s*1.2, s], [s, -s*1.2, s], [s, s*1.2, s], [-s, s*1.2, s],
+        [0, -s*1.7, 0], // Head vertex
+        [0, 0, 0] // Core fusion center
+      ];
+
+      const e = [
+        [0,1],[1,2],[2,3],[3,0],
+        [4,5],[5,6],[6,7],[7,4],
+        [0,4],[1,5],[2,6],[3,7],
+        [8,0],[8,1],[8,4],[8,5],
+        [9,0],[9,1],[9,2],[9,3],[9,4],[9,5],[9,6],[9,7]
+      ];
+
+      canvas.addEventListener('mousedown', (e) => {
+        isDraggingHolo = true;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+      });
+
+      window.addEventListener('mouseup', () => isDraggingHolo = false);
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isDraggingHolo) return;
+        const dx = e.clientX - prevMouseX;
+        const dy = e.clientY - prevMouseY;
+        holoRotY += dx * 0.01;
+        holoRotX += dy * 0.01;
+        prevMouseX = e.clientX;
+        prevMouseY = e.clientY;
+        const disp = document.getElementById('holo-rot-display');
+        if (disp) disp.innerText = `ROTATION: X: ${(holoRotX*57.3).toFixed(1)}° | Y: ${(holoRotY*57.3).toFixed(1)}°`;
+      });
+
+      function project(x, y, z) {
+        // Rotate Y
+        let cosY = Math.cos(holoRotY), sinY = Math.sin(holoRotY);
+        let x1 = x * cosY - z * sinY;
+        let z1 = z * cosY + x * sinY;
+
+        // Rotate X
+        let cosX = Math.cos(holoRotX), sinX = Math.sin(holoRotX);
+        let y2 = y * cosX - z1 * sinX;
+        let z2 = z1 * cosX + y * sinX;
+
+        // Perspective projection
+        const fov = 350;
+        const scale = fov / (fov + z2 + 180);
+        return {
+          x: w / 2 + x1 * scale,
+          y: h / 2 + y2 * scale,
+          scale: scale
+        };
+      }
+
+      function drawHolo() {
+        if (!isDraggingHolo) {
+          holoRotY += 0.005;
+        }
+        ctx.clearRect(0, 0, w, h);
+
+        // Grid rings
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.06)';
+        ctx.beginPath();
+        ctx.arc(w/2, h/2, 110, 0, Math.PI*2);
+        ctx.stroke();
+
+        // Project vertices
+        const proj = v.map(p => project(p[0], p[1], p[2]));
+
+        // Draw Edges
+        ctx.lineWidth = 1.5;
+        e.forEach((edge, idx) => {
+          const p1 = proj[edge[0]];
+          const p2 = proj[edge[1]];
+
+          if (currentHoloLayer === 'neural' && idx > 12) {
+            ctx.strokeStyle = 'rgba(0, 240, 255, 0.8)';
+          } else if (currentHoloLayer === 'core' && (edge[0] === 9 || edge[1] === 9)) {
+            ctx.strokeStyle = 'rgba(255, 170, 0, 0.9)';
+          } else if (currentHoloLayer === 'chassis') {
+            ctx.strokeStyle = 'rgba(255, 0, 85, 0.7)';
+          } else {
+            ctx.strokeStyle = idx % 2 === 0 ? 'rgba(0, 240, 255, 0.5)' : 'rgba(255, 0, 85, 0.5)';
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        });
+
+        // Draw Vertices
+        proj.forEach((p, idx) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, idx === 9 ? 6 : 3.5, 0, Math.PI*2);
+          ctx.fillStyle = idx === 9 ? '#ffaa00' : (idx === 8 ? '#ff0055' : '#00f0ff');
+          ctx.shadowColor = idx === 9 ? '#ffaa00' : '#00f0ff';
+          ctx.shadowBlur = 10;
+          ctx.fill();
+        });
+
+        requestAnimationFrame(drawHolo);
+      }
+      drawHolo();
+    })();
+
+    function resetHoloAngle() {
+      holoRotX = 0.2;
+      holoRotY = 0.4;
+      const disp = document.getElementById('holo-rot-display');
+      if (disp) disp.innerText = `ROTATION: X: ${(holoRotX*57.3).toFixed(1)}° | Y: ${(holoRotY*57.3).toFixed(1)}°`;
+      playSyntheticTone(1000, 'sine', 0.1);
+    }
+
+    function setHoloLayer(btn, layer) {
+      currentHoloLayer = layer;
+      document.querySelectorAll('.holo-layer-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      playSyntheticTone(800, 'triangle', 0.1);
+      showToast(`Hologram Telemetry: [${layer.toUpperCase()}] Layer Active`);
+    }
+
+    /* ==========================================================================
+       4. CUSTOM HUD CURSOR INTERACTION
+       ========================================================================== */
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorReticle = document.getElementById('cursor-reticle');
+    let mX = window.innerWidth / 2, mY = window.innerHeight / 2;
+    let rX = mX, rY = mY;
+
+    window.addEventListener('mousemove', (e) => {
+      mX = e.clientX;
+      mY = e.clientY;
+      if (cursorDot) {
+        cursorDot.style.left = `${mX}px`;
+        cursorDot.style.top = `${mY}px`;
+      }
+    });
+
+    function loopCursor() {
+      rX += (mX - rX) * 0.2;
+      rY += (mY - rY) * 0.2;
+      if (cursorReticle) {
+        cursorReticle.style.left = `${rX}px`;
+        cursorReticle.style.top = `${rY}px`;
+      }
+      requestAnimationFrame(loopCursor);
+    }
+    loopCursor();
+
+    function bindInteractiveHover() {
+      document.querySelectorAll('a, button, input, .module-card, .config-toggle-item, .faq-terminal-item, .hotspot, .preset-chip, .filter-btn, .cli-chip').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          document.body.classList.add('cursor-active');
+          playSyntheticTone(1400, 'sine', 0.03, 0.02);
+        });
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+      });
+    }
+    bindInteractiveHover();
+
+    /* ==========================================================================
+       5. CONFIGURATOR STATE & LIVE 6-MODULE MATRIX
+       ========================================================================== */
+    const configState = {
+      neural: { name: 'Neural Link v4', active: true, cost: 18500, rating: 22, power: 0.35, hotspot: 'hs-neural' },
+      arm: { name: 'Titan Chassis Arm', active: true, cost: 24000, rating: 34, power: 0.75, hotspot: 'hs-arm' },
+      optics: { name: 'Cyber-Optic Oculus', active: true, cost: 14200, rating: 18, power: 0.20, hotspot: 'hs-optics' },
+      armor: { name: 'Sub-Dermal Armor Mesh', active: false, cost: 19800, rating: 26, power: 0.15, hotspot: 'hs-armor' },
+      reflex: { name: 'Apex Reflex Synapse', active: false, cost: 22000, rating: 28, power: 0.45, hotspot: 'hs-reflex' },
+      cloaking: { name: 'Phantom Cloaking Core', active: false, cost: 31500, rating: 30, power: 1.20, hotspot: 'hs-cloaking' }
+    };
+
+    function recalculateConfig() {
+      let totalCost = 0;
+      let totalRating = 0;
+      let totalPower = 0;
+
+      for (let key in configState) {
+        const item = configState[key];
+        const hs = document.getElementById(item.hotspot);
+        const toggleItem = document.getElementById(`cfg-item-${key}`);
+
+        if (item.active) {
+          totalCost += item.cost;
+          totalRating += item.rating;
+          totalPower += item.power;
+          if (hs) hs.style.display = 'block';
+          if (toggleItem) toggleItem.classList.add('active');
+        } else {
+          if (hs) hs.style.display = 'none';
+          if (toggleItem) toggleItem.classList.remove('active');
+        }
+      }
+
+      document.getElementById('calc-rating').innerText = `${Math.min(100, totalRating)}%`;
+      document.getElementById('calc-power').innerText = `${totalPower.toFixed(2)} kW`;
+      document.getElementById('calc-cost').innerText = `₭ ${totalCost.toLocaleString()}`;
+    }
+
+    function toggleConfig(key) {
+      if (!configState[key]) return;
+      configState[key].active = !configState[key].active;
+      if (configState[key].active) {
+        playSyntheticTone(640, 'triangle', 0.1);
+        showToast(`[${configState[key].name}] Synchronized to chassis.`);
+      } else {
+        playSyntheticTone(320, 'sawtooth', 0.1);
+        showToast(`[${configState[key].name}] Decoupled from bus.`);
+      }
+      recalculateConfig();
+    }
+
+    function toggleFromCatalog(key, btn) {
+      if (!configState[key]) return;
+      configState[key].active = !configState[key].active;
+      if (configState[key].active) {
+        btn.innerText = 'Equipped ✓';
+        btn.classList.remove('hud-btn-primary');
+        btn.classList.add('hud-btn-secondary');
+        playSyntheticTone(750, 'triangle', 0.1);
+        showToast(`Equipped: ${configState[key].name}`);
+      } else {
+        btn.innerText = 'Equip';
+        btn.classList.add('hud-btn-primary');
+        btn.classList.remove('hud-btn-secondary');
+        playSyntheticTone(350, 'sawtooth', 0.1);
+        showToast(`Unequipped: ${configState[key].name}`);
+      }
+      recalculateConfig();
+    }
+
+    function applyPreset(preset) {
+      if (preset === 'assault') {
+        configState.neural.active = true;
+        configState.arm.active = true;
+        configState.armor.active = true;
+        configState.reflex.active = true;
+        configState.optics.active = false;
+        configState.cloaking.active = false;
+      } else if (preset === 'stealth') {
+        configState.neural.active = true;
+        configState.optics.active = true;
+        configState.cloaking.active = true;
+        configState.reflex.active = true;
+        configState.arm.active = false;
+        configState.armor.active = false;
+      } else if (preset === 'overclock') {
+        for (let k in configState) configState[k].active = true;
+      } else if (preset === 'minimal') {
+        for (let k in configState) configState[k].active = false;
+        configState.neural.active = true;
+      }
+      playSyntheticTone(900, 'triangle', 0.15);
+      showToast(`Chassis Preset: [${preset.toUpperCase()}] applied.`);
+      recalculateConfig();
+    }
+    recalculateConfig();
+
+    /* ==========================================================================
+       6. CATALOG SEARCH & CATEGORY FILTER
+       ========================================================================== */
+    function filterCatalog(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      playSyntheticTone(700, 'sine', 0.08);
+
+      const cards = document.querySelectorAll('.module-card');
+      cards.forEach(card => {
+        const cls = card.getAttribute('data-class');
+        if (category === 'ALL' || cls === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function handleCatalogSearch(term) {
+      const q = term.toLowerCase().trim();
+      const cards = document.querySelectorAll('.module-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name').toLowerCase();
+        const desc = card.querySelector('.module-desc').innerText.toLowerCase();
+        if (name.includes(q) || desc.includes(q)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* ==========================================================================
+       7. BENCHMARK OVERCLOCK LAB & OSCILLOSCOPE
+       ========================================================================== */
+    (function initOscilloscope() {
+      const canvas = document.getElementById('oscilloscope-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = canvas.parentElement.clientWidth || 400;
+      let h = canvas.height = 180;
+      let phase = 0;
+      let isOverclocked = false;
+
+      window.addEventListener('resize', () => {
+        if (canvas.parentElement) {
+          w = canvas.width = canvas.parentElement.clientWidth;
+          h = canvas.height = 180;
+        }
+      });
+
+      function renderWave() {
+        ctx.fillStyle = 'rgba(4, 7, 12, 0.25)';
+        ctx.fillRect(0, 0, w, h);
+
+        // Grid lines
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.07)';
+        ctx.lineWidth = 1;
+        for (let x = 0; x < w; x += 30) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, h);
+          ctx.stroke();
+        }
+        for (let y = 0; y < h; y += 30) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(w, y);
+          ctx.stroke();
+        }
+
+        // Oscilloscope Waveform
+        ctx.beginPath();
+        ctx.lineWidth = window.isBenchmarkOverclocking ? 3 : 2;
+        ctx.strokeStyle = window.isBenchmarkOverclocking ? '#ff0055' : '#00f0ff';
+        ctx.shadowColor = window.isBenchmarkOverclocking ? '#ff0055' : '#00f0ff';
+        ctx.shadowBlur = 12;
+
+        const freq = window.isBenchmarkOverclocking ? 0.04 : 0.015;
+        const amp = window.isBenchmarkOverclocking ? 45 : 25;
+
+        for (let x = 0; x < w; x++) {
+          const noise = window.isBenchmarkOverclocking ? (Math.random() - 0.5) * 15 : 0;
+          const y = h/2 + Math.sin(x * freq + phase) * amp + Math.cos(x * 0.01 - phase * 0.5) * (amp*0.5) + noise;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+
+        phase += window.isBenchmarkOverclocking ? 0.25 : 0.06;
+        requestAnimationFrame(renderWave);
+      }
+      renderWave();
+    })();
+
+    function appendTelemetryLog(msg, colorClass = '') {
+      const feed = document.getElementById('telemetry-logs');
+      if (!feed) return;
+      const log = document.createElement('div');
+      log.className = `log-line ${colorClass}`;
+      const now = new Date().toTimeString().split(' ')[0];
+      log.innerText = `[${now}] ${msg}`;
+      feed.appendChild(log);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    function runOverclockSimulation() {
+      if (window.isBenchmarkOverclocking) return;
+      window.isBenchmarkOverclocking = true;
+      triggerOverclockSound();
+
+      const btn = document.getElementById('overclock-btn');
+      const tag = document.getElementById('bench-status-tag');
+      btn.innerText = 'OVERCLOCK IN PROGRESS...';
+      btn.style.background = '#ff0055';
+      tag.innerText = 'STATUS: 1000% OVERCLOCK';
+      tag.style.color = 'var(--laser-crimson)';
+
+      document.getElementById('gauge-hz-val').innerText = '14.85 GHz';
+      document.getElementById('gauge-hz-fill').style.width = '100%';
+      document.getElementById('gauge-temp-val').innerText = '82.4 °C';
+      document.getElementById('gauge-temp-fill').style.width = '88%';
+      document.getElementById('gauge-temp-fill').style.background = '#ff0055';
+
+      appendTelemetryLog('OVERCLOCK ENGAGED: Neural frequency boosted to 14.85 GHz.', 'crimson');
+      appendTelemetryLog('Warning: Thermal dissipation radiators @ 82.4 °C.', 'amber');
+      showToast('⚠️ WARNING: Biometric Neural Overclock Active [1000%].');
+
+      setTimeout(() => {
+        window.isBenchmarkOverclocking = false;
+        btn.innerText = 'Initiate 10-Second Overclock';
+        btn.style.background = '';
+        tag.innerText = 'STATUS: STABLE';
+        tag.style.color = 'var(--matrix-green)';
+
+        document.getElementById('gauge-hz-val').innerText = '4.82 GHz';
+        document.getElementById('gauge-hz-fill').style.width = '68%';
+        document.getElementById('gauge-temp-val').innerText = '34.2 °C';
+        document.getElementById('gauge-temp-fill').style.width = '35%';
+        document.getElementById('gauge-temp-fill').style.background = 'var(--matrix-green)';
+
+        appendTelemetryLog('Overclock completed. Cooling fans disengaged. Core stable.', 'green');
+        playSyntheticTone(600, 'sine', 0.2);
+        showToast('Overclocking cycle completed. System returned to nominal load.');
+      }, 10000);
+    }
+
+    function triggerEmpShieldPulse() {
+      playSyntheticTone(1600, 'sawtooth', 0.25);
+      appendTelemetryLog('EMP burst absorbed by Sub-Dermal Plating. Dissipated 1.4 MV.', 'cyan');
+      showToast('EMP Kinetic Field Test: 100% Shock Absorbed.');
+      confetti({
+        particleCount: 45,
+        spread: 50,
+        origin: { y: 0.6 },
+        colors: ['#00f0ff', '#ffaa00']
+      });
+    }
+
+    /* ==========================================================================
+       8. FAQ TERMINAL & INTERACTIVE CLI SHELL
+       ========================================================================== */
+    function toggleFaqTerminal(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-terminal-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) {
+        item.classList.add('open');
+        playSyntheticTone(900, 'sine', 0.08);
+      }
+    }
+
+    function handleCliCommand(e) {
+      e.preventDefault();
+      const input = document.getElementById('cli-input');
+      const cmd = input.value.trim().toLowerCase();
+      input.value = '';
+      executeCliCommand(cmd);
+    }
+
+    function runCliQuick(cmd) {
+      executeCliCommand(cmd);
+    }
+
+    function executeCliCommand(cmd) {
+      const history = document.getElementById('cli-history');
+      if (!history) return;
+
+      const userLine = document.createElement('div');
+      userLine.innerHTML = `<span style="color: var(--laser-crimson);">operator@kronos:~$</span> <span style="color: #fff;">${cmd}</span>`;
+      history.appendChild(userLine);
+
+      const respLine = document.createElement('div');
+      respLine.style.color = 'var(--text-muted)';
+      respLine.style.lineHeight = '1.4';
+
+      if (cmd === 'help') {
+        respLine.innerHTML = `Available commands: <span style="color: var(--toxic-cyan);">scan, overclock, modules, status, dossier, clear, whoami</span>`;
+        playSyntheticTone(880, 'sine', 0.05);
+      } else if (cmd === 'scan') {
+        respLine.innerHTML = `<span style="color: var(--matrix-green);">[OK]</span> Biometric Subject: MK-VIII | Latency: 0.08ms | Sync: 99.8%`;
+        triggerScanSound();
+      } else if (cmd === 'overclock') {
+        respLine.innerHTML = `<span style="color: var(--laser-crimson);">[OVERCLOCK]</span> Dispatching 10s stress cycle...`;
+        runOverclockSimulation();
+      } else if (cmd === 'modules') {
+        respLine.innerHTML = `Active modules: Neural Link v4, Titan Arm, Cyber Optics. Total: ₭ 56,700.`;
+        playSyntheticTone(700, 'sine', 0.05);
+      } else if (cmd === 'status') {
+        respLine.innerHTML = `All 12 orbital relay nodes nominal. Root hash verified SHA3-512.`;
+        playSyntheticTone(700, 'sine', 0.05);
+      } else if (cmd === 'dossier') {
+        respLine.innerHTML = `Opening Requisition Dossier Terminal...`;
+        openRequisitionDossier();
+      } else if (cmd === 'clear') {
+        history.innerHTML = '';
+        return;
+      } else if (cmd === 'whoami') {
+        respLine.innerHTML = `CLASS-A AUTHORIZED OPERATOR // CLEARANCE LEVEL: OMEGA`;
+      } else {
+        respLine.innerHTML = `Unknown command: '${cmd}'. Type <span style="color: var(--toxic-cyan);">'help'</span> for instructions.`;
+        playSyntheticTone(280, 'sawtooth', 0.08);
+      }
+
+      history.appendChild(respLine);
+      history.scrollTop = history.scrollHeight;
+    }
+
+    /* ==========================================================================
+       9. MODAL HANDLERS & SURGICAL DOSSIER CHECKOUT
+       ========================================================================== */
+    function openModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) m.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      playSyntheticTone(1300, 'sine', 0.12);
+    }
+
+    function closeModal(modalId) {
+      const m = document.getElementById(modalId);
+      if (m) m.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOnBackdrop(e, modalId) {
+      if (e.target.classList.contains('modal-backdrop')) {
+        closeModal(modalId);
+      }
+    }
+
+    function openSpecModal(title, desc, m1, m2, m3) {
+      document.getElementById('modal-spec-title').innerText = title;
+      document.getElementById('modal-spec-desc').innerText = desc;
+      document.getElementById('modal-spec-metric1').innerText = m1;
+      document.getElementById('modal-spec-metric2').innerText = m2;
+      document.getElementById('modal-spec-metric3').innerText = m3;
+      openModal('spec-modal');
+    }
+
+    function openRequisitionDossier() {
+      const list = document.getElementById('dossier-items-list');
+      let totalCost = 0;
+      let count = 0;
+      list.innerHTML = '';
+
+      for (let k in configState) {
+        const item = configState[k];
+        if (item.active) {
+          count++;
+          totalCost += item.cost;
+          const row = document.createElement('div');
+          row.style.display = 'flex';
+          row.style.justifyContent = 'space-between';
+          row.innerHTML = `<span>+ ${item.name}</span><span style="color: var(--toxic-cyan);">₭ ${item.cost.toLocaleString()}</span>`;
+          list.appendChild(row);
+        }
+      }
+
+      if (count === 0) {
+        list.innerHTML = `<div style="color: var(--laser-crimson);">No modules selected in configurator.</div>`;
+      }
+
+      document.getElementById('dossier-total-cost').innerText = `₭ ${totalCost.toLocaleString()}`;
+      openModal('dossier-modal');
+      initSignatureCanvas();
+    }
+
+    // Signature Canvas logic
+    let sigCanvas, sigCtx, isDrawingSig = false;
+
+    function initSignatureCanvas() {
+      sigCanvas = document.getElementById('signature-canvas');
+      if (!sigCanvas) return;
+      sigCtx = sigCanvas.getContext('2d');
+      sigCanvas.width = sigCanvas.parentElement.clientWidth || 300;
+      sigCanvas.height = 110;
+
+      sigCtx.strokeStyle = '#00f0ff';
+      sigCtx.lineWidth = 2;
+      sigCtx.lineCap = 'round';
+
+      sigCanvas.onmousedown = (e) => {
+        isDrawingSig = true;
+        sigCtx.beginPath();
+        sigCtx.moveTo(e.offsetX, e.offsetY);
+      };
+      sigCanvas.onmousemove = (e) => {
+        if (!isDrawingSig) return;
+        sigCtx.lineTo(e.offsetX, e.offsetY);
+        sigCtx.stroke();
+      };
+      window.addEventListener('mouseup', () => isDrawingSig = false);
+    }
+
+    function clearSignature() {
+      if (sigCtx && sigCanvas) {
+        sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+        playSyntheticTone(400, 'sawtooth', 0.08);
+      }
+    }
+
+    function confirmSurgicalRequisition() {
+      closeModal('dossier-modal');
+      confetti({
+        particleCount: 110,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ff0055', '#00f0ff', '#00ff66', '#ffaa00']
+      });
+      playSyntheticTone(1760, 'sine', 0.4);
+      showToast('REQUISITION APPROVED: Bio-chassis mapping queued at Tokyo Hub-01.');
+      appendTelemetryLog('Surgical Requisition authorized and cryptographically logged.', 'green');
+    }
+
+    /* ==========================================================================
+       10. TOAST NOTIFICATIONS & DEPLOYMENT HANDLER
+       ========================================================================== */
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = 'hud-toast';
+      toast.innerHTML = `
+        <i data-lucide="check" style="width: 16px; height: 16px; color: var(--toxic-cyan);"></i>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.animation = 'toast-in 0.3s ease reverse forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    function handleDeployment(e) {
+      e.preventDefault();
+      const input = document.getElementById('deploy-email');
+      if (input && input.value) {
+        input.value = '';
+        confetti({
+          particleCount: 90,
+          spread: 70,
+          origin: { y: 0.7 },
+          colors: ['#ff0055', '#00f0ff', '#ffaa00']
+        });
+        showToast('Operator Credentials Transmitted. Security Clearance Confirmed.');
+        playSyntheticTone(1800, 'triangle', 0.3);
+      }
+    }
+
+    /* ==========================================================================
+       11. MOBILE MENU DRAWER
+       ========================================================================== */
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('open');
+      playSyntheticTone(900, 'sine', 0.1);
+    }
+
+    /* ==========================================================================
+       12. GLOBAL KEYBOARD SHORTCUTS
+       ========================================================================== */
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      if (e.key === 'Escape') {
+        closeModal('spec-modal');
+        closeModal('dossier-modal');
+        closeModal('shortcuts-modal');
+        const m = document.getElementById('mobile-menu');
+        if (m) m.classList.remove('open');
+      } else if (e.key === 'm' || e.key === 'M') {
+        toggleAudioEngine();
+      } else if (e.key === 's' || e.key === 'S') {
+        triggerScanSound();
+        showToast('Biometric Calibration Complete: Subject Sync 99.8%');
+      } else if (e.key === 'c' || e.key === 'C') {
+        document.getElementById('diagnostics').scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === 'b' || e.key === 'B') {
+        document.getElementById('benchmark').scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === '?') {
+        openModal('shortcuts-modal');
+      }
+    });
+
+    /* ==========================================================================
+       13. GSAP SCROLL TRIGGER ANIMATIONS & LIVE TELEMETRY TICKER
+       ========================================================================== */
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('hud-nav');
+      if (window.scrollY > 40) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    // Random micro-fluctuations in ping
+    setInterval(() => {
+      const p = (0.05 + Math.random() * 0.08).toFixed(2);
+      const el = document.getElementById('live-ping-val');
+      if (el) el.innerText = `${p}ms`;
+    }, 3000);
+
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.from('.hero-title', {
+        y: 50,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+
+      gsap.from('.hero-subtitle', {
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        delay: 0.2,
+        ease: 'power3.out'
+      });
+
+      gsap.from('.diagnostic-card', {
+        scrollTrigger: {
+          trigger: '.diagnostic-ribbon',
+          start: 'top 85%'
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+
+      gsap.from('.module-card', {
+        scrollTrigger: {
+          trigger: '#catalog',
+          start: 'top 75%'
+        },
+        y: 40,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: 'power2.out'
+      });
+    }
+  </script>
 </body>
 </html>
